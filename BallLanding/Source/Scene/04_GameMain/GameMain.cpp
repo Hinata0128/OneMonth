@@ -8,7 +8,6 @@
 #include "System/00_Manager/03_CollisionManager/CollisionManager.h" 
 
 
-#include "System/02_Singleton/02_SingletonManager/02_WallManager/WallManager.h"
 #include "System/02_Singleton/03_Score/ScoreManager.h"
 
 GameMain::GameMain()
@@ -21,8 +20,6 @@ GameMain::GameMain()
 
 	, m_pLimitTime(std::make_shared<LimitTime>(50.0))
 	
-	, m_pPointCan(nullptr)
-	, m_pSkyBox(std::make_shared<SkyBox>())
 	, m_pCamera(std::make_unique<Camera>())
 
 {
@@ -32,23 +29,8 @@ GameMain::GameMain()
 	m_pDx11 = DirectX11::GetInstance();
 	m_pDx9 = DirectX9::GetInstance();
 
-	// --- 1. まず当たり判定マネージャーを真っさらにする ---
 	CollisionManager::GetInstance()->Release();
 	CollisionManager::GetInstance()->Create();
-
-	// --- 2. その後に「かご」を生成する（これで正しく登録される） ---
-	m_pPointCan = std::make_unique<PointCan>();
-
-
-	BallManager::GetInstance()->Release(); // まだ無ければ作成してください
-	WallManager::GetInstance()->Release();
-
-	WallManager::GetInstance()->LoadData("Data\\json\\WallPosition\\WallPosition.json");
-	NeedleManager::GetInstance()->LoadData("Data\\json\\Needle\\Needel.json");
-
-	if (BallManager::GetInstance()) {
-		BallManager::GetInstance()->SetLimitTime(m_pLimitTime);
-	}
 
 	auto& sm = ScoreManager::GetInstance();
 	sm.SetCurrentGameID("GameMain");
@@ -67,8 +49,6 @@ GameMain::GameMain()
 	m_Camera.vPosition = D3DXVECTOR3(0.0f, 5.0f, -5.0f);
 	m_Camera.vLook = D3DXVECTOR3(0.0f, 2.0f, 5.0f);
 	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);
-
-	m_pSkyBox->SetCamera(m_pCamera.get());
 
 	Initialize();
 
@@ -120,14 +100,7 @@ void GameMain::Update()
 
 
 	m_pLimitTime->Update();
-
-	WallManager::GetInstance()->Update();
-	NeedleManager::GetInstance()->Update();
-
-	m_pPointCan->Update();
-	BallManager::GetInstance()->Update();
 	m_pScore->Update();
-	m_pSkyBox->Update();
 
 	if (m_pLimitTime->IsTimeUp())
 	{
@@ -143,7 +116,6 @@ void GameMain::Draw()
 	Projection();
 
 	PreDraw();
-	m_pSkyBox->Draw();
 
 #ifdef _DEBUG
 	ImGui::Begin(JAPANESE("タイマー情報"));
@@ -180,14 +152,10 @@ void GameMain::Draw()
 	m_pGround->Draw();
 	
 
-	BallManager::GetInstance()->Draw();
-	WallManager::GetInstance()->Draw();
-	NeedleManager::GetInstance()->Draw();
 
 	m_pLimitTime->Draw();
 
 
-	m_pPointCan->Draw();
 	m_pScore->Draw();
 
 }

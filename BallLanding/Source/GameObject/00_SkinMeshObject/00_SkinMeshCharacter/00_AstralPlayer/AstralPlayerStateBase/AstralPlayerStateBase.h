@@ -4,7 +4,8 @@
 class AstralPlayer;
 
 // StateBaseをpublic継承することで、派生クラスからUpcast（変換）が可能になる
-class AstralPlayerStateBase : public StateBase<AstralPlayer>
+class AstralPlayerStateBase
+    : public StateBase<AstralPlayer>
 {
 public:
     AstralPlayerStateBase(AstralPlayer* owner) : StateBase<AstralPlayer>(owner) {}

@@ -1,13 +1,13 @@
-#pragma once
-#include <crtdbg.h>//_ASSERT_EXPR()‚Å•K—v.
+ï»¿#pragma once
+#include <crtdbg.h>//_ASSERT_EXPR()ã§å¿…è¦.
 
 //===========================================================
-//	ƒ}ƒNƒ.
+//	ãƒã‚¯ãƒ­.
 //===========================================================
 
-//‰ğ•ú.
+//è§£æ”¾.
 #define SAFE_RELEASE(p)	if(p!=nullptr){(p)->Release();(p)=nullptr;}
-//”jŠü.
+//ç ´æ£„.
 #define SAFE_DELETE(p) if(p!=nullptr){delete (p);(p)=nullptr;}
 #define SAFE_DELETE_ARRAY(p)	\
 {								\
@@ -17,5 +17,5 @@
 	}							\
 }
 
-//ImGui@“ú–{Œê‘Î‰.
+//ImGuiã€€æ—¥æœ¬èªå¯¾å¿œ.
 #define JAPANESE(str) reinterpret_cast<const char*>(u8##str)

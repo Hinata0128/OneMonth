@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 #include "GameObject/GameObject.h"
 #include "Sprite2D/Sprite2D.h"
 
 /************************************************************
-*	UIƒIƒuƒWƒFƒNƒgƒNƒ‰ƒX.
+*	UIã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹.
 **/
 class UIObject 
 	: public GameObject
@@ -13,18 +13,18 @@ public:
 	UIObject();
 	virtual ~UIObject() override;
 
-	// Update ‚Æ Draw
+	// Update ã¨ Draw
 	virtual void Update() override;
 	virtual void Draw() override;
 
 	virtual void Create();
 
 
-	// ƒXƒvƒ‰ƒCƒg‚ğÚ‘±‚·‚é
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’æ¥ç¶šã™ã‚‹
 	void AttachSprite(std::shared_ptr<Sprite2D> pSprite) { m_pSprite = std::move(pSprite); }
 	void DetachSprite() { m_pSprite.reset(); }
 
-	// ƒpƒ^[ƒ“”Ô†‚ğİ’è
+	// ãƒ‘ã‚¿ãƒ¼ãƒ³ç•ªå·ã‚’è¨­å®š
 	void SetPatternNo(SHORT x, SHORT y)
 	{
 		m_PatternNo.x = x;
@@ -37,7 +37,7 @@ public:
 protected:
 	std::shared_ptr<Sprite2D> m_pSprite;
 
-	POINTS		m_PatternNo;	// ƒpƒ^[ƒ“”Ô†(ƒ}ƒX–Ú)
+	POINTS		m_PatternNo;	// ãƒ‘ã‚¿ãƒ¼ãƒ³ç•ªå·(ãƒã‚¹ç›®)
 
 	float  m_Alpha;
 };

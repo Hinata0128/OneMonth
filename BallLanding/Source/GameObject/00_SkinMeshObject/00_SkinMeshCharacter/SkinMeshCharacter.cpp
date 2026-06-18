@@ -1,4 +1,4 @@
-#include "SkinMeshCharacter.h"
+﻿#include "SkinMeshCharacter.h"
 
 SkinMeshCharacter::SkinMeshCharacter()
 	: SkinMeshObject()

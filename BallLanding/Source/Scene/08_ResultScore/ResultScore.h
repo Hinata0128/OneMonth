@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Scene/SceneBase.h"
 
 class UIScoreNumber;
@@ -16,13 +16,13 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	//ƒJƒƒ‰ŠÖ”.
+	//ã‚«ãƒ¡ãƒ©é–¢æ•°.
 	void ApplyCamera() override {}
-	//ƒvƒƒWƒFƒNƒVƒ‡ƒ“ŠÖ”.
+	//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³é–¢æ•°.
 	void Projection() override {}
 
 private:
-	//•\¦—p‚ÌƒNƒ‰ƒX.
+	//è¡¨ç¤ºç”¨ã®ã‚¯ãƒ©ã‚¹.
 	std::unique_ptr<UIScoreNumber> m_pCurrentScoreUI;
 	std::unique_ptr<UIScoreNumber> m_pHighScoreUI;
 };

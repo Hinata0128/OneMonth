@@ -1,4 +1,4 @@
-#include "Character.h"
+ï»¿#include "Character.h"
 
 Character::Character()
 	: StaticMeshObject()
@@ -23,7 +23,7 @@ void Character::Draw()
 
 void Character::Init()
 {
-	//‰½‚à‘‚©‚È‚¢.
+	//ä½•ã‚‚æ›¸ã‹ãªã„.
 }
 
 bool Character::GetDead() const

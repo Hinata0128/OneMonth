@@ -1,4 +1,4 @@
-#include "SceneBase.h"
+﻿#include "SceneBase.h"
 
 SceneBase::SceneBase()
 	: m_pMesh		(nullptr)

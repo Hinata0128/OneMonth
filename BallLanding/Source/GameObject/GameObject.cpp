@@ -1,6 +1,6 @@
-#include "GameObject.h"
+ï»¿#include "GameObject.h"
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^.
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿.
 GameObject::GameObject()
 	: m_Position	{}
 	, m_Rotation	( 0.0f, 0.0f, 0.0f )
@@ -8,7 +8,7 @@ GameObject::GameObject()
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^.
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿.
 GameObject::~GameObject()
 {
 }

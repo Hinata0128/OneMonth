@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include "GameObject/00_SkinMeshObject/SkinMeshObject.h"
 #include "Collision/BoundingSphere/BoundingSphere.h"
 
 /**************************************************************
-*	ƒXƒLƒ“ƒƒbƒVƒ…ƒNƒ‰ƒX.
+*	ã‚¹ã‚­ãƒ³ãƒ¡ãƒƒã‚·ãƒ¥ã‚¯ãƒ©ã‚¹.
 **/
 
 class SkinMeshCharacter
@@ -20,7 +20,7 @@ public:
 public:
 	virtual bool GetDead() const;
 protected:
-	//€–S.
+	//æ­»äº¡.
 	bool m_Dead;
 
 };

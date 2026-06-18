@@ -6,21 +6,8 @@
 //当たり判定に使用するクラスをインクルード.
 #include "System//00_Manager//ManagerBase.h"
 
-#include "GameObject/02_StaticMeshObject/01_Ball/Ball.h"
-#include "GameObject/02_StaticMeshObject/02_WallBase/00_Wall/Wall.h"
 
 #include "System/02_Singleton/03_Score/Score.h"
-
-#include "GameObject/02_StaticMeshObject/06_Character/00_Player/Player.h"
-#include "GameObject/02_StaticMeshObject/05_ShotBase/01_EnemyShot/EnemyShot.h"
-
-#include "GameObject/02_StaticMeshObject/07_Ring/Ring.h"
-
-#include "GameObject/02_StaticMeshObject/06_Character/02_AstroEvolution_Player/AstroEvolution_Player.h"
-#include "GameObject/02_StaticMeshObject/06_Character/03_AstroEvolution_Rock/AstroEvolution_Rock.h"
-#include "System/02_Singleton/02_SingletonManager/09_AstroEvolution_PlayerShot_Manager/AstroEvolution_PlayerShot_Manager.h"
-#include "GameObject/02_StaticMeshObject/06_Character/04_AstroEvoultion_Boss/AstroEvoultion_Boss.h"
-#include "System/02_Singleton/02_SingletonManager/10_AstroEvolution_BossShot_Manager/AstroEvolution_BossShot_Manager.h"
 
 /******************************************************************************
 *	当たり判定マネージャークラス.
@@ -44,8 +31,9 @@ public:
 	CollisionManager();
 	~CollisionManager() override;
 
-	static CollisionManager* GetInstance() {
-		static CollisionManager instance; // 🌟ここで実体が作られる（1回だけ）
+	static CollisionManager* GetInstance() 
+	{
+		static CollisionManager instance; 
 		return &instance;
 	}
 
@@ -84,12 +72,6 @@ public:
 	// 点数を設定するための関数を追加
 	void SetScoreValue(int value) { m_ScoreValue = value; }
 
-	void AddRing(Ring* pRing) { m_pRings.push_back(pRing); }
-	void ClearRings() { m_pRings.clear(); }
-
-	void AddRock(AstroEvolution_Rock* pRock) { m_pRocks.push_back(pRock); }
-	void ClearRocks() { m_pRocks.clear(); }
-
 	void SetAstralPlayer(AstralPlayer* p) { m_pAstralPlayer = p; }
 	void SetAstralBoss(AstralBoss* p) { m_pAstralBoss_New = p; }
 private:
@@ -108,14 +90,6 @@ private:
 	int m_ScoreValue = 0;
 private:
 
-	Player* m_pPlayer = nullptr;
-	AstroEvolution_Player* m_pAstroPlayer = nullptr;
-	AstroEvoultion_Boss* m_pAstroBoss = nullptr;
-	std::vector<EnemyShot*> m_EnemyShots;
-
-	std::vector<Ring*> m_pRings;
-	std::vector<AstroEvolution_Rock*> m_pRocks;
-
 	bool m_isPlayerHit = false;
 
 	bool IsPlayerHit() const { return m_isPlayerHit; }
@@ -130,11 +104,6 @@ private:
 
 	float m_PlayerAttackEffectTimer = 0.0f;
 public:
-
-	void SetPlayer(Player* p) { m_pPlayer = p; }
-	void SetAstro_Player(AstroEvolution_Player* Ap) { m_pAstroPlayer = Ap; }
-	void SetAstro_Boss(AstroEvoultion_Boss* Ab) { m_pAstroBoss = Ab; }
-	void AddEnemyShot(EnemyShot* shot) { m_EnemyShots.push_back(shot); }
 
 	void SetCamera(Camera* pCamera) { m_pCamera = pCamera; }
 };
