@@ -1,0 +1,175 @@
+[Window][Debug##Default]
+Pos=60,60
+Size=400,400
+Collapsed=0
+
+[Window][Hello Window]
+Pos=92,69
+Size=95,58
+Collapsed=0
+
+[Window][My Debug Window]
+ViewportPos=1348,307
+ViewportId=0x43B82432
+Size=373,203
+Collapsed=0
+
+[Window][Timer Info]
+ViewportPos=1377,75
+ViewportId=0xFC016D28
+Size=289,110
+Collapsed=0
+
+[Window][タイマー情報]
+ViewportPos=1596,80
+ViewportId=0xA4D966FE
+Size=300,180
+Collapsed=0
+DockId=0x00000002,0
+
+[Window][debuga]
+ViewportPos=1300,142
+ViewportId=0xA0692D4F
+Size=253,75
+Collapsed=0
+
+[Window][Portal : 増加量]
+ViewportPos=1478,251
+ViewportId=0x676244E3
+Size=314,112
+Collapsed=0
+
+[Window][playerのポジションを変更]
+ViewportPos=1596,80
+ViewportId=0xA4D966FE
+Pos=0,92
+Size=300,88
+Collapsed=0
+DockId=0x00000003,0
+
+[Window][Portal : 増加量/占有者]
+ViewportPos=1593,258
+ViewportId=0x648623FD
+Size=307,147
+Collapsed=0
+
+[Window][Game Score]
+ViewportPos=1605,423
+ViewportId=0x7442DD1E
+Size=220,110
+Collapsed=0
+
+[Window][BossAI: 内部ステータス]
+ViewportPos=1356,70
+ViewportId=0xA1104547
+Size=236,154
+Collapsed=0
+
+[Window][Portal System]
+ViewportPos=1596,276
+ViewportId=0x7916E0CB
+Size=321,143
+Collapsed=0
+
+[Window][Com: 内部ステータス]
+ViewportPos=1389,82
+ViewportId=0x51730C9F
+Size=208,127
+Collapsed=0
+
+[Window][Scene Debug]
+ViewportPos=1432,229
+ViewportId=0xD6FA3A12
+Size=150,319
+Collapsed=0
+
+[Window][Wall Editor]
+ViewportPos=1374,532
+ViewportId=0x8C16BDF2
+Size=586,349
+Collapsed=0
+
+[Window][Needle Edit]
+ViewportPos=1376,526
+ViewportId=0x4F8F1FDF
+Size=347,130
+Collapsed=0
+
+[Window][針のマネージャ.]
+Pos=60,60
+Size=296,209
+Collapsed=0
+
+[Window][針のマネージャ]
+ViewportPos=1296,531
+ViewportId=0xEBA68710
+Size=529,355
+Collapsed=0
+
+[Window][Camera Debug]
+ViewportPos=797,808
+ViewportId=0x30C1EA88
+Size=377,124
+Collapsed=0
+
+[Window][ゲームスコア]
+ViewportPos=1312,95
+ViewportId=0x4E570E8D
+Size=367,94
+Collapsed=0
+
+[Window][壁のマネージャ]
+ViewportPos=274,783
+ViewportId=0x7B371AE2
+Size=473,238
+Collapsed=0
+
+[Window][Collision Monitor]
+ViewportPos=525,772
+ViewportId=0xDEAFE486
+Size=556,183
+Collapsed=0
+
+[Window][Collision Debugger]
+Pos=60,60
+Size=414,210
+Collapsed=0
+
+[Window][Player Debug]
+ViewportPos=1332,576
+ViewportId=0xF0537709
+Size=467,339
+Collapsed=0
+
+[Window][岩のマネージャ]
+Pos=21,70
+Size=203,196
+Collapsed=0
+
+[Window][Performance]
+ViewportPos=1331,62
+ViewportId=0x044B1956
+Size=141,108
+Collapsed=0
+
+[Window][AstralPlayer Debug]
+Pos=60,60
+Size=134,114
+Collapsed=0
+
+[Window][AstralBoss Debug]
+ViewportPos=50,794
+ViewportId=0x31FE1247
+Size=197,196
+Collapsed=0
+
+[Window][プレイヤーのパラメータ変更]
+Pos=63,219
+Size=289,209
+Collapsed=0
+
+[Docking][Data]
+DockNode    ID=0x00000001 Pos=1596,80 Size=300,180 Split=Y Selected=0xC03952A5
+  DockNode  ID=0x00000002 Parent=0x00000001 SizeRef=300,90 Selected=0x660C8DAE
+  DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=300,88 Selected=0xC03952A5
+

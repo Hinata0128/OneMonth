@@ -1,0 +1,305 @@
+#include "Title.h"
+
+#include "SceneManager/SceneManager.h"
+#include "GameObject/03_UIObject/UIObject.h"
+#include "Sprite2D/Sprite2D.h"
+#include "DirectX/DirectX11.h"
+#include "System/02_Singleton/00_Timer/Timer.h"
+#include "System/02_Singleton/02_SingletonManager/08_AstroEvolution_Rock_Manager/AstroEvolution_Rock_Manager.h"
+
+#include "Sound/SoundManager.h"
+
+
+Title::Title()
+    : m_Select              ( SelectMenu::Start )
+    , m_State               ( TitleState::Select )
+    , m_StartPos            ( 550.f, 450.f, 0.f )
+    , m_CreditPos           ( 550.f, 550.f, 0.f )
+    , m_EndPos              ( 550.f, 650.f, 0.f )
+
+    , m_pSpriteBack         ( std::make_shared<Sprite2D>() )
+    , m_upBack              ( std::make_shared<UIObject>() )
+
+    , m_pSpriteTitle        ( std::make_shared<Sprite2D>() )
+    , m_upTitle             ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteStart         ( std::make_shared<Sprite2D>() )
+    ,m_upStart              ( std::make_shared<UIObject>() )
+
+    , m_pSpriteCredit       ( std::make_shared<Sprite2D>() )
+    , m_upCredit            ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteEnd           ( std::make_shared<Sprite2D>() )
+    ,m_upEnd                ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteFade          ( std::make_shared<Sprite2D>() )
+    ,m_upFade               ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteSelectBack    ( std::make_shared<Sprite2D>() )
+    ,m_upSelectBack         ( std::make_shared<UIObject>() )
+
+    ,m_pSpriteSelectFrame   ( std::make_shared<Sprite2D>() )
+    ,m_upSelectFrame        ( std::make_shared<UIObject>() )
+
+{
+}
+
+Title::~Title()
+{
+}
+
+void Title::Initialize()
+{
+}
+
+void Title::Create()
+{
+    //背景・フェード画像のサイズ.
+    const float WND_W = 1280.0f;
+    const float WND_H = 720.0f;
+
+    //Lose画像のサイズのローカル変数.
+    const float Defeat_W = 430.0f;
+    const float Defeat_H = 210.0f;
+
+    //スタート・クレジットボタン画像のサイズ.
+    const float Start_W = 135.0f;
+    const float Staet_H = 45.0f;
+
+    //エンド画像のサイズ.
+    const float End_W = 84.0f;
+    const float End_H = 45.0f;
+
+    //背景画像の設定
+    Sprite2D::SPRITE_STATE ssTitle{ WND_W, WND_H, WND_W, WND_H, WND_W, WND_H };
+    //背景画像の読み込み.
+    m_pSpriteBack->Init(_T("Data\\Image\\Setting\\Surface.png"), ssTitle);
+    m_upBack->AttachSprite(m_pSpriteBack);
+    m_upBack->SetPosition( 0.0f, 0.0f, 0.0f );
+
+    //タイトル画像の読み込み.
+    Sprite2D::SPRITE_STATE SSTitle =
+    {
+        Defeat_W, Defeat_H, Defeat_W, Defeat_H, Defeat_W, Defeat_H
+    };
+    m_pSpriteTitle->Init(_T("Data\\Image\\Setting\\Title.png"), SSTitle);
+    m_upTitle->AttachSprite(m_pSpriteTitle);
+    m_upTitle->SetPosition(450.0f, 200.0, 0.0f);
+
+    //スタートボタン
+    Sprite2D::SPRITE_STATE ssStart{ Start_W, Staet_H, Start_W, Staet_H, Start_W, Staet_H };
+    //スタート画像の読み込み.
+    m_pSpriteStart->Init(_T("Data\\Image\\Setting\\S_Start.png"), ssStart);
+    m_upStart->AttachSprite(m_pSpriteStart);
+
+    //クレジットボタン画像の読み込み.
+    m_pSpriteCredit->Init(_T("Data\\Image\\Setting\\CreditButton.png"), ssStart);
+    m_upCredit->AttachSprite(m_pSpriteCredit);
+
+    //エンドボタン
+    Sprite2D::SPRITE_STATE ssEnd{ End_W, End_H, End_W, End_H, End_W, End_H };
+    //エンド画像の読み込み.
+    m_pSpriteEnd->Init(_T("Data\\Image\\Setting\\S_End.png"), ssEnd);
+    m_upEnd->AttachSprite(m_pSpriteEnd);
+
+    //フェード用の黒画像
+    Sprite2D::SPRITE_STATE ssFade{ WND_W, WND_H, WND_W, WND_H, WND_W, WND_H };
+    m_pSpriteFade->Init(_T("Data\\Image\\Setting\\Black.png"), ssFade);
+    m_upFade->AttachSprite(m_pSpriteFade);
+    m_upFade->SetPosition({ 0.0f, 0.0f, 0.0f });
+    m_upFade->SetAlpha(0.0f);
+
+    Sprite2D::SPRITE_STATE ssBack{ 320,80,320,80,320,80 };
+    m_pSpriteSelectBack->Init(_T("Data\\Image\\Setting\\SelectBack.png"), ssBack);
+    m_upSelectBack->AttachSprite(m_pSpriteSelectBack);
+    m_upSelectBack->SetPosition(m_StartPos);
+
+    m_pSpriteSelectFrame->Init(_T("Data\\Image\\Setting\\SelectFrame.png"), ssBack);
+    m_upSelectFrame->AttachSprite(m_pSpriteSelectFrame);
+    m_upSelectFrame->SetPosition(m_StartPos);
+
+}
+
+void Title::Update()
+{
+    switch (m_State)
+    {
+    case TitleState::Select:
+        UpdateSelect();
+        break;
+
+    case TitleState::FadeOut:
+        UpdateFadeOut();
+        break;
+
+    case TitleState::First:
+        SceneManager::GetInstance()->LoadScene(SceneManager::Universe);
+        break;
+    }
+
+#ifdef _DEBUG
+    if (GetAsyncKeyState(VK_CONTROL) & 0x0001)
+    {
+        SceneManager::GetInstance()->LoadScene(SceneManager::Lose);
+    }
+    if (GetAsyncKeyState('A') & 0x0001)
+    {
+        SceneManager::GetInstance()->LoadScene(SceneManager::Win);
+    }
+#endif
+}
+
+void Title::Draw()
+{
+    auto dx = DirectX11::GetInstance();
+
+    dx->SetDepth(false);
+    dx->SetAlphaBlend(true);
+
+    m_upBack->Draw();
+    m_upTitle->Draw();
+
+    D3DXVECTOR3 currentSelectPos;
+
+    switch (m_Select)
+    {
+    case SelectMenu::Start:  
+        currentSelectPos = m_StartPos;  
+        break;
+    case SelectMenu::End:
+        currentSelectPos = m_EndPos;    
+        break;
+    case SelectMenu::Credit:
+        currentSelectPos = m_CreditPos; 
+        break;
+    default:
+        break; 
+    }
+
+    D3DXVECTOR3 backPos = currentSelectPos;
+    backPos.x -= 100.0f; //背景を左にずらして、文字を背景の中央に合わせる
+    backPos.y -= 15.0f; //背景を少し上にずらして上下の中央を合わせる
+
+    //青い背景
+    m_upSelectBack->SetPosition(backPos);
+    m_upSelectBack->Draw();
+
+    //選択枠も同じ位置に
+    m_upSelectFrame->SetPosition(backPos);
+    m_upSelectFrame->Draw();
+
+    //ボタンの座標更新と描画
+    m_upStart->SetPosition(m_StartPos);
+    m_upCredit->SetPosition(m_CreditPos);
+    m_upEnd->SetPosition(m_EndPos);
+    m_upStart->Draw();
+    m_upCredit->Draw();
+    m_upEnd->Draw();
+
+    //フェード
+    //ステートに関わらず、アルファ値が0より大きければ描画する
+    if (m_FadeAlpha > 0.0f)
+    {
+        m_upFade->SetAlpha(m_FadeAlpha);
+        m_upFade->Draw();
+    }
+
+    dx->SetAlphaBlend(false);
+    dx->SetDepth(true);
+}
+
+void Title::UpdateSelect()
+{
+    m_InputTimer += Timer::GetInstance().DeltaTime();
+
+    // 1. マウスの物理座標を取得
+    HWND hWnd = DirectX11::GetInstance()->GethWnd();
+    POINT mousePos;
+    GetCursorPos(&mousePos);
+    ScreenToClient(hWnd, &mousePos);
+
+    // 2. フルスクリーン/可変ウィンドウ対応：現在のクライアント領域のサイズを取得
+    RECT rc;
+    GetClientRect(hWnd, &rc);
+    float windowW = (float)(rc.right - rc.left);
+    float windowH = (float)(rc.bottom - rc.top);
+
+    // 0除算防止チェック
+    if (windowW <= 0.0f) windowW = 1.0f;
+    if (windowH <= 0.0f) windowH = 1.0f;
+
+    // 3. 物理座標をゲーム内の論理座標（1280x720）に変換
+    float mouseX = (float)mousePos.x * (1280.0f / windowW);
+    float mouseY = (float)mousePos.y * (720.0f / windowH);
+
+    SelectMenu oldSelect = m_Select;
+
+    // 4. ボタンの当たり判定（変換後のmouseX, mouseYを使用）
+    const float btnW = 320.0f; // 背景画像の幅
+    const float btnH = 80.0f;  // 背景画像の高さ
+
+    // 各ボタンの判定範囲（Draw時の補正値 -100, -15 を考慮）
+    auto CheckMouseOver = [&](D3DXVECTOR3 pos) {
+        float x = pos.x - 100.0f;
+        float y = pos.y - 15.0f;
+        return (mouseX >= x && mouseX <= x + btnW &&
+            mouseY >= y && mouseY <= y + btnH);
+        };
+
+    // --- マウスホバーによる選択の更新（キーボード入力部分は削除） ---
+    if (CheckMouseOver(m_StartPos))  m_Select = SelectMenu::Start;
+    else if (CheckMouseOver(m_CreditPos)) m_Select = SelectMenu::Credit;
+    else if (CheckMouseOver(m_EndPos))    m_Select = SelectMenu::End;
+
+    // 選択項目が（マウス移動によって）変わった時のSE再生
+    if (m_Select != oldSelect) {
+        SoundManager::GetInstance()->PlaySE(SoundManager::SE_Select);
+    }
+
+    // 5. 決定操作 (マウス左クリックのみ、スペースキーは削除)
+    // 0x8000で「今押されているか」を判定
+    if (GetAsyncKeyState(VK_LBUTTON) & 0x8000) {
+        if (m_InputTimer >= 0.2f) {
+
+            // マウス位置が、現在選択されている（ホバーしている）ボタンの上にあるか確認
+            bool onButton = CheckMouseOver(m_StartPos) || CheckMouseOver(m_CreditPos) || CheckMouseOver(m_EndPos);
+
+            if (onButton) {
+                SoundManager::GetInstance()->PlaySE(SoundManager::SE_Enter);
+
+                switch (m_Select) {
+                case SelectMenu::Start:
+                    m_State = TitleState::FadeOut;
+                    m_FadeAlpha = 0.0f;
+                    break;
+
+                case SelectMenu::Credit:
+                {
+                    auto tempPlayer = std::make_unique<AstroEvolution_Player>();
+                    tempPlayer->ResetStatus();
+                    tempPlayer->SaveData("Data/json/Player/AstroEvolution_Player_Param/AstroEvolution_Player_Param.json");
+
+                    AstroEvolution_Rock_Manager::GetInstance()->ResetRound();
+                    SceneManager::GetInstance()->LoadScene(SceneManager::Astro);
+                    break;
+                }
+                case SelectMenu::End:
+                    PostQuitMessage(0);
+                    break;
+                }
+                m_InputTimer = 0.0f;
+            }
+        }
+    }
+}
+
+void Title::UpdateFadeOut()
+{
+    m_FadeAlpha += m_FadeSpeed * Timer::GetInstance().DeltaTime();
+
+    if (m_FadeAlpha >= 1.0f)
+    {
+        m_FadeAlpha = 1.0f;
+        m_State = TitleState::First;
+    }
+}
