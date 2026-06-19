@@ -3,6 +3,8 @@
 #include "..//Data/ImGui/Library/imgui_impl_dx11.h"
 #include "..//Data/ImGui/Library/imgui_impl_win32.h"
 
+#include "..//ManagerBase.h"
+
 #include <string>
 
 /*****************************************************
@@ -11,9 +13,12 @@
 **/
 
 class ImGuiManager final
+	: public ManagerBase<ImGuiManager>
 {
 public:
-	~ImGuiManager();
+	//基底クラスの GetInstance()にだけ生成を許可する.
+	friend class ManagerBase<ImGuiManager>;
+	~ImGuiManager() override;
 	//インスタンスを取得.
 	static ImGuiManager* GetInstance();
 
@@ -21,6 +26,10 @@ public:
 	//引数にhWndを入れている理由(予想)
 	//ウィンドウだけでしか使わないのでゲーム内では使用しないためだとおもう.
 	static HRESULT Init(HWND hWnd);
+
+	void Update() override;
+	void Draw() override;
+	void Release() override;
 
 	//リリース関数.
 	static void Relese();

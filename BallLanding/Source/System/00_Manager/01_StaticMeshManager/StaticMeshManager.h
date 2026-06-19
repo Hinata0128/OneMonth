@@ -6,9 +6,11 @@
 *	スタティックメッシュマネージャークラス.
 **********************************************/
 class StaticMeshManager
-	: public ManagerBase
+	: public ManagerBase<StaticMeshManager> 
 {
 public:
+	//基底クラスの GetInstance()にだけ生成を許可する.
+	friend class ManagerBase<StaticMeshManager>;
 	//モデルの種類の列挙型.
 	enum class CMeshList : byte
 	{
