@@ -3,6 +3,7 @@
 
 class StaticMeshManager;
 class Camera;
+class PlayerShot;
 
 class Player
 	: public Character
@@ -38,6 +39,7 @@ private:
 	Camera* m_pCamera;
 	float   m_MoveSpeed;   //移動速度.
 	float   m_RotSpeed;    //旋回速度.
-
+	//確認用のために弾を一発出させる.
+	std::unique_ptr<PlayerShot> m_upPlayerShot;
 
 };

@@ -34,6 +34,7 @@ void StaticMeshManager::Create()
 		{ static_cast<int>(CMeshList::BoxCollision),	_T("Data\\Mesh\\Static\\Collision\\Box.x")},
 		{ static_cast<int>(CMeshList::Fighter),			_T("Data\\Mesh\\Static\\Fighter\\Fighter.x")},
 		{ static_cast<int>(CMeshList::Jabaran),			_T("Data\\Mesh\\Static\\Jabaran\\Jabaran.x")},
+		{ static_cast<int>(CMeshList::PlayerShot),			_T("Data\\Mesh\\Static\\ShotAsset\\PlayerShotAsset.x")},
 	};
 		//配列の要素数を取得.
 	const int listMax = static_cast<int>(std::size(MList));
