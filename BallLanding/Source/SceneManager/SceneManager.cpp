@@ -20,7 +20,7 @@ SceneManager::~SceneManager()
 HRESULT SceneManager::Create(HWND hWnd)
 {
 	m_hWnd = hWnd;
-	LoadScene(List::Astral);
+	LoadScene(List::Main);
 	return S_OK;
 }
 
@@ -117,7 +117,7 @@ void SceneManager::MakeScene(List Scene)
 		break;
 	case SceneManager::Main:
 		//SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Main);
-		//m_pScene = std::make_unique<GameMain>();
+		m_pScene = std::make_unique<GameMain>();
 		break;
 	case SceneManager::Lose:
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Main);
