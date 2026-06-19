@@ -20,6 +20,7 @@ public:
 
 		Fighter,			//プレイヤーのメッシュ.
 		Jabaran,			//敵のメッシュ.
+		PlayerShot,			//プレイヤーの弾.
 
 		Max,
 	};

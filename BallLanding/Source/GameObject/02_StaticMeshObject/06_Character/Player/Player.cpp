@@ -2,7 +2,7 @@
 
 #include "System//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "System/06_Camera/Camera.h"
-
+#include "..//..//ShotBase/PlayerShot/PlayerShot.h"
 
 Player::Player()
 	: Character()
@@ -11,6 +11,7 @@ Player::Player()
 	, m_MoveSpeed(0.2f)   //移動速度.
 	, m_RotSpeed(0.05f)   //旋回速度.
 
+	, m_upPlayerShot(nullptr)
 {
 	//敵のスタティックメッシュを呼び込む.
 	auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Fighter);
@@ -39,11 +40,46 @@ Player::~Player()
 void Player::Update()
 {
 	HandleMovement();
+
+	//ボタンが押されたときに弾を発射する.
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		// 弾がまだ存在していない（nullptr）ときだけ新しく作って発射する
+		if (m_upPlayerShot == nullptr)
+		{
+			// ★ ここで新しくインスタンスを生成する！
+			m_upPlayerShot = std::make_unique<PlayerShot>();
+
+			//初期パラメータ.
+			D3DXVECTOR3 StartPos = m_Position;
+			D3DXVECTOR3 Velocity = D3DXVECTOR3(0.0f, 0.0f, 80.0f);
+			float Radius = 1.0f;
+			float Life = 3.0f;
+
+			// 生成直後なので、絶対に安全にLaunchを呼べます
+			m_upPlayerShot->Launch(StartPos, Velocity, Radius, Life);
+		}
+	}
+	//弾が存在している時.
+	if (m_upPlayerShot != nullptr)
+	{
+		m_upPlayerShot->Update();
+		if (m_upPlayerShot->Active() == false)
+		{
+			//deleteされる.
+			m_upPlayerShot.reset();
+		}
+	}
+
 	Character::Update();
 }
 
 void Player::Draw()
 {
+	if (m_upPlayerShot != nullptr)
+	{
+		m_upPlayerShot->Draw();
+	}
 	Character::Draw();
 }
 
