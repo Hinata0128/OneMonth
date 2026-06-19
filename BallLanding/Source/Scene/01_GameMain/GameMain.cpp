@@ -1,4 +1,4 @@
-#include "GameMain.h"
+﻿#include "GameMain.h"
 #include "Sound//SoundManager.h"
 #include "Effect//Effect.h"
 
@@ -27,6 +27,7 @@ GameMain::GameMain()
 
 	, m_pAstralPlayer(std::make_unique<AstralPlayer>())
 
+	, m_upPlayer(std::make_unique<Player>())
 	, m_upJabaran(std::make_unique<Jabaran>())
 
 {
@@ -60,14 +61,14 @@ void GameMain::Initialize()
 	m_pCamera->SetAngleX(D3DXToRadian(5.0f));
 	m_pCamera->SetAngleY(0.0f);
 
-	m_pAstralPlayer->SetCamera_Player_Back(m_pCamera.get());
+	m_upPlayer->SetCamera_Player_Back(m_pCamera.get());
 
 	Effect::GetInstance()->Clear();
 
 
 	auto colManager = CollisionManager::GetInstance();
 	colManager->SetCamera(m_pCamera.get());
-	colManager->SetAstralPlayer(m_pAstralPlayer.get()); // プレイヤーを登録
+	colManager->SetPlayer(m_upPlayer.get()); // プレイヤーを登録
 }
 
 void GameMain::Create()
@@ -81,11 +82,12 @@ void GameMain::Update()
 	Effect::GetInstance()->Update();
 
 	m_pAstralPlayer->Update();
-	m_upJabaran->Update();
+	m_upPlayer->Update();
+	//m_upJabaran->Update();
 
 	// カメラ
-	m_pCamera->SetAngleY(m_pAstralPlayer->GetAngleY());
-	m_pCamera->Update(m_pAstralPlayer->GetPosition());
+	m_pCamera->SetAngleY(m_upPlayer->GetAngleY());
+	m_pCamera->Update(m_upPlayer->GetPosition());
 }
 
 void GameMain::Draw()
@@ -124,7 +126,8 @@ void GameMain::Draw()
 	m_pGround->Draw();
 
 	m_upJabaran->Draw();
-	m_pAstralPlayer->Draw();
+	m_upPlayer->Draw();
+	//m_pAstralPlayer->Draw();
 	m_pLimitTime->Draw();
 	Effect::GetInstance()->Draw();
 
