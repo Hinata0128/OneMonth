@@ -17,6 +17,7 @@ public:
 		BoxCollision,		//ボックスの当たり判定.
 
 		Fighter,			//プレイヤーのメッシュ.
+		Jabaran,			//敵のメッシュ.
 
 		Max,
 	};

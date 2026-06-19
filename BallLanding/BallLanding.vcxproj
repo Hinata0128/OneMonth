@@ -204,7 +204,6 @@
     <ClCompile Include="Source\Main\Main.cpp" />
     <ClCompile Include="Source\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Source\Scene\05_Ending\Ending.cpp" />
-    <ClCompile Include="Source\Scene\04_GameMain\GameMain.cpp" />
     <ClCompile Include="Source\Scene\06_GameOver\GameOver.cpp" />
     <ClCompile Include="Source\Scene\07_Credit\Credit.cpp" />
     <ClCompile Include="Source\Scene\08_ResultScore\ResultScore.cpp" />
@@ -272,8 +271,8 @@
     <ClInclude Include="Source\GameObject\GameObject.h" />
     <ClInclude Include="Source\Main\Main.h" />
     <ClInclude Include="Source\SceneManager\SceneManager.h" />
+    <ClInclude Include="Source\Scene\01_GameMain\GameMain.h" />
     <ClInclude Include="Source\Scene\05_Ending\Ending.h" />
-    <ClInclude Include="Source\Scene\04_GameMain\GameMain.h" />
     <ClInclude Include="Source\Scene\06_GameOver\GameOver.h" />
     <ClInclude Include="Source\Scene\07_Credit\Credit.h" />
     <ClInclude Include="Source\Scene\08_ResultScore\ResultScore.h" />
