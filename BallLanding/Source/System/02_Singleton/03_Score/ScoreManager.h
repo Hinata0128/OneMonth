@@ -8,12 +8,12 @@
 #include <nlohmann/json.hpp>
 
 class ScoreManager final
-	: public Singleton
+	: public Singleton<ScoreManager>
 {
 public:
+	//Singletonベースクラスにprivateコンストラクタの呼び出しを許可する.
+	friend class Singleton<ScoreManager>;
 	~ScoreManager() override;
-
-	static ScoreManager& GetInstance();
 
 	//指定した名前のスコアを取得.
 	std::shared_ptr<Score> GetScore(const std::string& key);

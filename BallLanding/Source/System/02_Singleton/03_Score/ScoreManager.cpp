@@ -12,12 +12,6 @@ ScoreManager::~ScoreManager()
 {
 }
 
-ScoreManager& ScoreManager::GetInstance()
-{
-	static ScoreManager instance;
-	return instance;
-}
-
 std::shared_ptr<Score> ScoreManager::GetScore(const std::string& key)
 {
 	// 既に同じ名前のスコアがあるか探す

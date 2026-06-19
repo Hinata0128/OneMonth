@@ -7,18 +7,6 @@ Timer::Timer()
 {
 }
 
-Timer::~Timer()
-{
-}
-
-Timer& Timer::GetInstance()
-{
-	// TODO: return ステートメントをここに挿入します
-	static Timer s_Instance;
-	return s_Instance;
-
-}
-
 void Timer::Update()
 {
 	auto Now = std::chrono::high_resolution_clock::now();
