@@ -8,6 +8,7 @@
 
 
 #include "System/02_Singleton/03_Score/Score.h"
+#include "GameObject\02_StaticMeshObject\06_Character\Player\Player.h"
 
 /******************************************************************************
 *	当たり判定マネージャークラス.
@@ -74,6 +75,8 @@ public:
 
 	void SetAstralPlayer(AstralPlayer* p) { m_pAstralPlayer = p; }
 	void SetAstralBoss(AstralBoss* p) { m_pAstralBoss_New = p; }
+
+	void SetPlayer(Player* p) { m_upPlayer = p; }
 private:
 	//当たり判定の関数をここに書きます
 	bool CheckSphereSphere(const BoundingSphere& a, const BoundingSphere& b);	//スフィア同士の判定. 
@@ -101,6 +104,8 @@ private:
 
 	AstralPlayer* m_pAstralPlayer = nullptr;
 	AstralBoss* m_pAstralBoss_New = nullptr;
+	//初期化をいったんここでしている.
+	Player* m_upPlayer = nullptr;
 
 	float m_PlayerAttackEffectTimer = 0.0f;
 public:

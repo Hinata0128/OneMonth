@@ -1,4 +1,4 @@
-#include "Jabaran.h"
+﻿#include "Jabaran.h"
 
 #include "System//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 
@@ -12,14 +12,14 @@ Jabaran::Jabaran()
 	AttachMesh(*pStaticMesh);
 	
 	//ポジションの設定.
-	D3DXVECTOR3 Pos = { 0.0f,0.0f,-4.0f };
+	D3DXVECTOR3 Pos = { 0.0f,0.0f,10.0f };
 	SetPosition(Pos);
 
 	//サイズの変更.
 	D3DXVECTOR3 Scale = { 0.01f,0.01f,0.01f };
 	SetScale(Scale);
 	//光遮断.
-	this->SetLightEnable(true);
+	this->SetLightEnable(false);
 	Init();
 
 
