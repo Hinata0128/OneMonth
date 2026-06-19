@@ -12,39 +12,11 @@ public:
 	//モデルの種類の列挙型.
 	enum class CMeshList : byte
 	{
-		Ball,				//玉.
 		Ground,				//地面.
 		SphereCollision,	//球の当たり判定.
-		EnemyBullet,		//敵の弾.
 		BoxCollision,		//ボックスの当たり判定.
 
-		Portal,				//ポータルのメッシュ.
-
-		SkyBox,				//背景画像の導入.
-
-		PortalFrame,		//ポータルの範囲表示.
-		
-		Wall,				//壁のメッシュ.
-
-		Needle,				//針.
-
-		PointCan,			//ボールを入れる箱.
-
-		Enemy,				//UniverseShooter用の敵のスタティック.
-
 		Fighter,			//プレイヤーのメッシュ.
-
-		Ring,				//リングのメッシュ.
-
-		SkyDome,
-		SkyDome_No3,		//AstroEvolision用.
-
-		Rock_OneHundred,
-		Rock_Fifty,
-		Rock_Ten,
-
-		SkyDome_No4,		//AstralDuel用.
-
 
 		Max,
 	};
