@@ -71,6 +71,18 @@ HRESULT ImGuiManager::Init(HWND hWnd)
     return S_OK;
 }
 
+void ImGuiManager::Update()
+{
+}
+
+void ImGuiManager::Draw()
+{
+}
+
+void ImGuiManager::Release()
+{
+}
+
 void ImGuiManager::Relese()
 {
     ImGui_ImplDX11_Shutdown();

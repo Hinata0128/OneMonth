@@ -10,9 +10,11 @@
 **/
 
 class SkinMeshManager
-	: public ManagerBase
+	: public ManagerBase<SkinMeshManager>
 {
 public:
+	//基底クラスの GetInstance()にだけ生成を許可する.
+	friend class ManagerBase<SkinMeshManager>;
 	// スキンモデルの種類の列挙型.
 	enum class SkinList
 	{

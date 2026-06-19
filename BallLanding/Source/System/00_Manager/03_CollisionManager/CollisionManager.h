@@ -25,10 +25,13 @@ struct CollisionResult
 	D3DXVECTOR3 PushVector; //押し戻すためのベクトル.
 };
 
-class CollisionManager
-	: public ManagerBase
+class CollisionManager final
+	: public ManagerBase<CollisionManager>
 {
 public:
+	//基底クラスの GetInstance()にだけ生成を許可する.
+	friend class ManagerBase<CollisionManager>;
+
 	CollisionManager();
 	~CollisionManager() override;
 
