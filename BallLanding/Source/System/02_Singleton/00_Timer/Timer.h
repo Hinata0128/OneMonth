@@ -8,12 +8,12 @@
 **/
 
 class Timer final
-	: public Singleton
+	: public Singleton<Timer>
 {
 public:
-	~Timer() override;
-
-	static Timer& GetInstance();
+	//Singletonクラスにprivateコンストラクタの呼び出しを許可する.
+	friend class Singleton<Timer>;
+	~Timer() override = default;
 
 	void Update();
 	void Clear() override;

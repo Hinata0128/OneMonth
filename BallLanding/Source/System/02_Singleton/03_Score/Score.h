@@ -4,16 +4,16 @@
 
 /***************************************************************
 *	スコアクラス.
-*	ToDo : マネージャクラスに渡す.
-*		   スコアナンバークラスを呼んでスコアの表示をしている.
 **/
 
 class UIScoreNumber;
 
 class Score final
-	: public Singleton
+	: public Singleton<Score>
 {
 public:
+	//Singletonベースクラスにprivateコンストラクタの呼び出しを許可する.
+	friend class Singleton<Score>;
 	Score();
 	~Score() override;
 
