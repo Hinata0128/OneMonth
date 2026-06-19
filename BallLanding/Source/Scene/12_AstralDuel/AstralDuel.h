@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 #include "Scene//SceneBase.h"
 #include "GameObject//01_SpriteObject//SpriteObject.h"
