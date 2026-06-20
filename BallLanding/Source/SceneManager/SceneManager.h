@@ -6,7 +6,6 @@
 #include "Scene/05_Ending/Ending.h"
 #include "Scene/07_Credit/Credit.h"
 #include "Scene/08_ResultScore/ResultScore.h"
-#include "Scene/12_AstralDuel/AstralDuel.h"
 
 
 
@@ -26,7 +25,6 @@ public:
 		Win,		//勝利.
 		CCredit,	//クレジット.
 		Score,		//スコア.
-		Astral,		//一対一の対決.
 
 		max,	//何も書かない.
 	};

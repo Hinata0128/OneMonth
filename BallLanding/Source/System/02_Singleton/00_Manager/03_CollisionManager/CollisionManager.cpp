@@ -13,8 +13,6 @@
 #include "System/02_Singleton//00_Manager/02_ImGuiManager/ImGuiManager.h"
 
 
-#include "GameObject/00_SkinMeshObject/00_SkinMeshCharacter/00_AstralPlayer/AstralPlayer.h"
-#include "GameObject/00_SkinMeshObject/00_SkinMeshCharacter/01_AstralBoss/AstralBoss.h"
 #include "..//..//..//06_Camera/Camera.h"
 
 CollisionManager::CollisionManager()
@@ -133,100 +131,6 @@ void CollisionManager::AllCollider()
             {
                 sphere->SetPosition(sphere->GetPostion() + result.PushVector);
 
-            }
-        }
-    }
-
-
-
-
-
-    if (m_pAstralPlayer && m_pAstralBoss_New)
-    {
-        // 1. プレイヤー側の球体リストを取得
-        std::vector<std::shared_ptr<BoundingSphere>> playerSpheres = {
-            m_pAstralPlayer->GetSphereBody(),
-            m_pAstralPlayer->GetSphereHead()
-        };
-
-        // 2. ボス側の球体リストを取得 (AstralBossにも同様のGetterがあると仮定)
-        std::vector<std::shared_ptr<BoundingSphere>> bossSpheres = {
-            m_pAstralBoss_New->GetSpheres(),
-        };
-
-        for (auto& pSphere : playerSpheres)
-        {
-            if (!pSphere) continue;
-
-            for (auto& bSphere : bossSpheres)
-            {
-                if (!bSphere) continue;
-
-                // 球体同士の衝突判定
-                if (CheckSphereSphere(*pSphere, *bSphere))
-                {
-                    // 座標と押し出し方向の計算
-                    D3DXVECTOR3 pPos = m_pAstralPlayer->GetPosition();
-                    D3DXVECTOR3 bPos = m_pAstralBoss_New->GetPosition();
-                    D3DXVECTOR3 diff = pPos - bPos; // ボスからプレイヤーへのベクトル
-
-                    float dist = D3DXVec3Length(&diff);
-                    float minRadii = pSphere->GetRadius() + bSphere->GetRadius();
-
-                    if (dist < 0.001f) diff = D3DXVECTOR3(0, 0, 1);
-                    D3DXVec3Normalize(&diff, &diff);
-
-                    // 押し戻し量（ボスは重いので、プレイヤー側を多めに押し戻すとそれっぽくなります）
-                    float overlap = minRadii - dist;
-
-                    // 例: プレイヤー 0.8 : ボス 0.2 の割合で分配
-                    m_pAstralPlayer->SetPosition(pPos + diff * (overlap * 0.8f));
-                    m_pAstralBoss_New->SetPosition(bPos - diff * (overlap * 0.2f));
-
-                    // 各クラスの内部スフィア座標を即座に更新
-                    m_pAstralPlayer->UpdateCollisionPosition();
-                    m_pAstralBoss_New->UpdateCollisionPosition();
-
-                }
-            }
-        }
-    }
-
-    // --- 【修正】プレイヤーの攻撃 vs ボスの当たり判定 ---
-    if (m_pAstralPlayer && m_pAstralPlayer->IsAttacking() && m_pAstralBoss_New)
-    {
-        // タイマーをデルタタイム分減らす
-        if (m_PlayerAttackEffectTimer > 0.0f)
-        {
-            m_PlayerAttackEffectTimer -= Timer::GetInstance().DeltaTime();
-        }
-
-        auto attackSphere = m_pAstralPlayer->GetAttackSphere();
-        auto bossSpheres = m_pAstralBoss_New->GetSpheres();
-
-        if (attackSphere)
-        {
-            for (auto& bSphere : bossSpheres)
-            {
-                if (bSphere && CheckSphereSphere(*attackSphere, *bSphere))
-                {
-                    // ボスにダメージ（ダメージは毎フレーム与えても、エフェクトだけ制限する）
-                    m_pAstralBoss_New->OnHit(10.0f);
-
-                    // --- 🌟 0.5秒経過しているかチェック ---
-                    if (m_PlayerAttackEffectTimer <= 0.0f)
-                    {
-                        // エフェクト再生
-                        Effect::GetInstance()->Play(Effect::Laser01, bSphere->GetPostion());
-
-                        // タイマーを0.5秒にリセット
-                        m_PlayerAttackEffectTimer = 0.5f;
-
-                        if (m_pCamera) m_pCamera->SetShake(0.5f, 0.2f);
-                    }
-
-                    break; // 1つの球体に当たったらループを抜ける
-                }
             }
         }
     }

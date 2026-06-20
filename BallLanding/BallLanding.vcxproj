@@ -211,7 +211,6 @@
     <ClCompile Include="Source\Scene\06_GameOver\GameOver.cpp" />
     <ClCompile Include="Source\Scene\07_Credit\Credit.cpp" />
     <ClCompile Include="Source\Scene\08_ResultScore\ResultScore.cpp" />
-    <ClCompile Include="Source\Scene\12_AstralDuel\AstralDuel.cpp" />
     <ClCompile Include="Source\Scene\01_GameMain\GameMain.cpp" />
     <ClCompile Include="Source\Scene\SceneBase.cpp" />
     <ClCompile Include="Source\Scene\00_Title\Title.cpp" />
@@ -284,7 +283,6 @@
     <ClInclude Include="Source\Scene\06_GameOver\GameOver.h" />
     <ClInclude Include="Source\Scene\07_Credit\Credit.h" />
     <ClInclude Include="Source\Scene\08_ResultScore\ResultScore.h" />
-    <ClInclude Include="Source\Scene\12_AstralDuel\AstralDuel.h" />
     <ClInclude Include="Source\Scene\SceneBase.h" />
     <ClInclude Include="Source\Scene\00_Title\Title.h" />
     <ClInclude Include="Source\System\02_Singleton\00_Manager\00_SkinMeshManager\SkinMeshManager.h" />

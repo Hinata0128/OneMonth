@@ -61,10 +61,3 @@ SkinMesh* SkinMeshManager::GetSkinMeshInstance(SkinList skinNo)
 	//指定されたスキン番号のインスタンスを取得.
 	return m_pSkin[static_cast<int>(skinNo)].get();
 }
-
-//シングルトンインスタンスの取得.
-SkinMeshManager* SkinMeshManager::GetInstance()
-{
-	static SkinMeshManager s_Instance;
-	return &s_Instance;
-}

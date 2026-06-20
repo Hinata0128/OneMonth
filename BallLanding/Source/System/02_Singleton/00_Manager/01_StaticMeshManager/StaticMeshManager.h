@@ -26,6 +26,7 @@ public:
 	};
 
 public:
+	StaticMeshManager();
 	~StaticMeshManager() override;
 
 	void Create() override;
@@ -38,18 +39,6 @@ public:
 		return m_pMesh[static_cast<int>(MeshNo)].get();
 	};
 
-	//シングルトンインスタンスの取得.
-	static StaticMeshManager* GetInstance()
-	{
-		static StaticMeshManager s_Instance;//唯一のインスタンス.
-		return &s_Instance;//参照を返す.
-	}
-
 private:
-	StaticMeshManager();
-	//コンストラクタを外部アクセス禁止.
-	StaticMeshManager(const StaticMeshManager& rhs) = delete;
-	StaticMeshManager& operator=(const StaticMeshManager& rhs) = delete;
-
 	std::unique_ptr<StaticMesh> m_pMesh[static_cast<int>(CMeshList::Max)];
 };
