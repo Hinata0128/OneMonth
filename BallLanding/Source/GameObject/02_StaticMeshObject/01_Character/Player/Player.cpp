@@ -2,7 +2,7 @@
 
 #include "System//02_Singleton//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "System/06_Camera/Camera.h"
-#include "..//..//ShotBase/PlayerShot/PlayerShot.h"
+#include "System\02_Singleton\00_Manager\04_PlayerShotManager\PlayerShotManager.h"
 
 Player::Player()
 	: Character()
@@ -11,7 +11,6 @@ Player::Player()
 	, m_MoveSpeed(0.2f)   //移動速度.
 	, m_RotSpeed(0.05f)   //旋回速度.
 
-	, m_upPlayerShot(nullptr)
 {
 	//敵のスタティックメッシュを呼び込む.
 	auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Fighter);
@@ -44,42 +43,30 @@ void Player::Update()
 	//ボタンが押されたときに弾を発射する.
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		// 弾がまだ存在していない（nullptr）ときだけ新しく作って発射する
-		if (m_upPlayerShot == nullptr)
-		{
-			//コンストラクタ内でのインスタンス生成ではなく攻撃発射時にインスタンス生成をするようにした.
-			m_upPlayerShot = std::make_unique<PlayerShot>();
 
-			//初期パラメータ.
-			D3DXVECTOR3 StartPos = m_Position;
-			D3DXVECTOR3 Velocity = D3DXVECTOR3(0.0f, 0.0f, 80.0f);
-			float Radius = 1.0f;
-			float Life = 3.0f;
+		//初期パラメータ.
+		D3DXVECTOR3 StartPos = m_Position;
+		//プレイヤーの向いている角度から弾が発射するように設定.
+		float sinY = sinf(m_AngleY);
+		float cosY = cosf(m_AngleY);
+		D3DXVECTOR3 PlayerTargetDir = D3DXVECTOR3(sinY, 0.0f, cosY);
+		D3DXVECTOR3 Velocity = PlayerTargetDir * 80.0f;
+		float Radius = 1.0f;
+		float Life = 3.0f;
 
-			//生成直後弾の設定可能.
-			m_upPlayerShot->Launch(StartPos, Velocity, Radius, Life);
-		}
+		//生成直後弾の設定可能.
+		//m_upPlayerShot->Launch(StartPos, Velocity, Radius, Life);
+		PlayerShotManager::GetInstance()->Launch(StartPos, Velocity, Radius, Life);
 	}
 	//弾が存在している時.
-	if (m_upPlayerShot != nullptr)
-	{
-		m_upPlayerShot->Update();
-		if (m_upPlayerShot->Active() == false)
-		{
-			//deleteされる.
-			m_upPlayerShot.reset();
-		}
-	}
-
+	PlayerShotManager::GetInstance()->Update();
+	
 	Character::Update();
 }
 
 void Player::Draw()
 {
-	if (m_upPlayerShot != nullptr)
-	{
-		m_upPlayerShot->Draw();
-	}
+	PlayerShotManager::GetInstance()->Draw();
 	Character::Draw();
 }
 
