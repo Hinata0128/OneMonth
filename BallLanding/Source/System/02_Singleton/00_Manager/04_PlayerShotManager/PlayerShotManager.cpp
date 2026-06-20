@@ -83,7 +83,7 @@ void PlayerShotManager::KillShotByCollider(const std::shared_ptr<BoundingSphere>
 	{
 		if (shot && shot->GetCollider() == sphere)
 		{
-			shot->ShotKill(); // 弾を死亡状態にする
+			shot->ShotKill(); //弾を死亡状態にする.
 			break;
 		}
 	}
