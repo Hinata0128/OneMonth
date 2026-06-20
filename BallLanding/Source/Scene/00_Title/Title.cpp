@@ -4,7 +4,7 @@
 #include "GameObject/03_UIObject/UIObject.h"
 #include "Sprite2D/Sprite2D.h"
 #include "DirectX/DirectX11.h"
-#include "System/02_Singleton/00_Timer/Timer.h"
+#include "System/02_Singleton/01_Timer/Timer.h"
 
 #include "Sound/SoundManager.h"
 

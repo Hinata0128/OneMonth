@@ -8,7 +8,7 @@
 
 #include "SkinMeshParser.h"
 
-#include "System/02_Singleton/00_Timer/Timer.h"
+#include "System/02_Singleton/01_Timer/Timer.h"
 
 //前方宣言.
 class DirectX9;

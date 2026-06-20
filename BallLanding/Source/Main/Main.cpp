@@ -2,16 +2,16 @@
 #include "DirectX\\DirectX9.h"
 #include "DirectX\\DirectX11.h"
 #include "SceneManager/SceneManager.h"
-#include "System/00_Manager/01_StaticMeshManager/StaticMeshManager.h"
-#include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
+#include "System/02_Singleton//00_Manager/01_StaticMeshManager/StaticMeshManager.h"
+#include "System/02_Singleton//00_Manager/00_SkinMeshManager/SkinMeshManager.h"
 #include "Effect/Effect.h"
 #include "Sound/SoundManager.h"
 
-#include "System/00_Manager/02_ImGuiManager/ImGuiManager.h"
+#include "System/02_Singleton//00_Manager/02_ImGuiManager/ImGuiManager.h"
 //ImGuiメッセージハンドラ.
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-#include "System/02_Singleton/00_Timer/Timer.h"
+#include "System/02_Singleton/01_Timer/Timer.h"
 
 //=================================================
 //	定数.

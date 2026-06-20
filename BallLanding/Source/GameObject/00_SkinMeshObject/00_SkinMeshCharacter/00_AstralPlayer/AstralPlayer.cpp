@@ -1,8 +1,8 @@
 ﻿#include "AstralPlayer.h"
-#include "System/00_Manager/00_SkinMeshManager/SkinMeshManager.h"
+#include "System/02_Singleton//00_Manager/00_SkinMeshManager/SkinMeshManager.h"
 #include "System/06_Camera/Camera.h"
-#include "System/00_Manager/02_ImGuiManager/ImGuiManager.h"
-#include "System/00_Manager/03_CollisionManager/CollisionManager.h"
+#include "System/02_Singleton//00_Manager/02_ImGuiManager/ImGuiManager.h"
+#include "System/02_Singleton//00_Manager/03_CollisionManager/CollisionManager.h"
 
 #include <cmath>
 

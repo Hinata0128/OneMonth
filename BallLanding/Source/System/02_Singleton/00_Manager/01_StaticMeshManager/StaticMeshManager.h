@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "StaticMash//StaticMesh.h"
-#include "System//00_Manager//ManagerBase.h"
+#include "System//02_Singleton//00_Manager//ManagerBase.h"
 
 /**********************************************
 *	スタティックメッシュマネージャークラス.

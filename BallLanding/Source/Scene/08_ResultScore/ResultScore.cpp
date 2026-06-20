@@ -1,7 +1,7 @@
 ﻿#include "ResultScore.h"
 
 #include "GameObject//03_UIObject//01_UIScoreNumber//UIScoreNumber.h"
-#include "System//02_Singleton//03_Score//ScoreManager.h"
+#include "System//02_Singleton//02_Score//ScoreManager.h"
 
 #include "SceneManager/SceneManager.h"
 
