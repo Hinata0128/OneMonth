@@ -4,18 +4,18 @@
 
 #include <algorithm>
 
-#include "System//02_Singleton//00_Timer//Timer.h"
+#include "System//02_Singleton//01_Timer//Timer.h"
 
 #include "Sound//SoundManager.h"
 
-#include "System/02_Singleton/03_Score/Score.h"
+#include "System/02_Singleton/02_Score/Score.h"
 
-#include "System/00_Manager/02_ImGuiManager/ImGuiManager.h"
+#include "System/02_Singleton//00_Manager/02_ImGuiManager/ImGuiManager.h"
 
 
 #include "GameObject/00_SkinMeshObject/00_SkinMeshCharacter/00_AstralPlayer/AstralPlayer.h"
 #include "GameObject/00_SkinMeshObject/00_SkinMeshCharacter/01_AstralBoss/AstralBoss.h"
-#include "..//..//06_Camera/Camera.h"
+#include "..//..//..//06_Camera/Camera.h"
 
 CollisionManager::CollisionManager()
     : m_pTargetScore(nullptr)

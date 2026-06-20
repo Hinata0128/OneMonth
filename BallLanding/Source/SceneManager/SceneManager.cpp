@@ -1,7 +1,7 @@
 ﻿#include "SceneManager.h"
 #include "Sound/SoundManager.h"
 
-#include "..//System/00_Manager/02_ImGuiManager/ImGuiManager.h"
+#include "..//System/02_Singleton//00_Manager/02_ImGuiManager/ImGuiManager.h"
 
 SceneManager::SceneManager()
 	: m_pScene			( nullptr )

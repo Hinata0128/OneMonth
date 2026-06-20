@@ -1,6 +1,6 @@
 ﻿#include "Player.h"
 
-#include "System//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
+#include "System//02_Singleton//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "System/06_Camera/Camera.h"
 #include "..//..//ShotBase/PlayerShot/PlayerShot.h"
 
@@ -47,7 +47,7 @@ void Player::Update()
 		// 弾がまだ存在していない（nullptr）ときだけ新しく作って発射する
 		if (m_upPlayerShot == nullptr)
 		{
-			// ★ ここで新しくインスタンスを生成する！
+			//コンストラクタ内でのインスタンス生成ではなく攻撃発射時にインスタンス生成をするようにした.
 			m_upPlayerShot = std::make_unique<PlayerShot>();
 
 			//初期パラメータ.
@@ -56,7 +56,7 @@ void Player::Update()
 			float Radius = 1.0f;
 			float Life = 3.0f;
 
-			// 生成直後なので、絶対に安全にLaunchを呼べます
+			//生成直後弾の設定可能.
 			m_upPlayerShot->Launch(StartPos, Velocity, Radius, Life);
 		}
 	}

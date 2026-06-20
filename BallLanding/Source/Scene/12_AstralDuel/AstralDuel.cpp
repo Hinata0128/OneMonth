@@ -2,11 +2,11 @@
 #include "Sound//SoundManager.h"
 #include "Effect//Effect.h"
 
-#include "System//02_Singleton//00_Timer//Timer.h"
-#include "System//00_Manager//02_ImGuiManager//ImGuiManager.h"
+#include "System//02_Singleton//01_Timer//Timer.h"
+#include "System//02_Singleton//00_Manager//02_ImGuiManager//ImGuiManager.h"
 
 
-#include "System/00_Manager/03_CollisionManager/CollisionManager.h" 
+#include "System/02_Singleton//00_Manager/03_CollisionManager/CollisionManager.h" 
 
 #include "SceneManager/SceneManager.h"
 

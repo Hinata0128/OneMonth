@@ -1,14 +1,14 @@
 ﻿#pragma once
-#include "System//02_Singleton//00_Timer//Timer.h"
+#include "System//02_Singleton//01_Timer//Timer.h"
 #include "Collision//BoundingBox//BoundingBox.h"
 #include "Collision//BoundingSphere//BoundingSphere.h"
 
 //当たり判定に使用するクラスをインクルード.
-#include "System//00_Manager//ManagerBase.h"
+#include "System//02_Singleton//00_Manager//ManagerBase.h"
 
 
-#include "System/02_Singleton/03_Score/Score.h"
-#include "GameObject\02_StaticMeshObject\06_Character\Player\Player.h"
+#include "System/02_Singleton/02_Score/Score.h"
+#include "GameObject\02_StaticMeshObject\01_Character\Player\Player.h"
 
 /******************************************************************************
 *	当たり判定マネージャークラス.

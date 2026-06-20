@@ -4,7 +4,7 @@
 #include "GameObject//01_SpriteObject//SpriteObject.h"
 #include "SceneManager//SceneManager.h"
 
-#include "System/00_Manager/03_CollisionManager/CollisionManager.h"
+#include "System/02_Singleton//00_Manager/03_CollisionManager/CollisionManager.h"
 
 #include "Sprite3D//Sprite3D.h"
 
@@ -19,8 +19,8 @@
 
 #include "GameObject/00_SkinMeshObject/00_SkinMeshCharacter/00_AstralPlayer/AstralPlayer.h"
 
-#include "GameObject\02_StaticMeshObject\06_Character\Player\Player.h"
-#include "GameObject\02_StaticMeshObject\06_Character\Jabaran\Jabaran.h"
+#include "GameObject\02_StaticMeshObject\01_Character\Player\Player.h"
+#include "GameObject\02_StaticMeshObject\01_Character\Jabaran\Jabaran.h"
 
 class Timer;
 

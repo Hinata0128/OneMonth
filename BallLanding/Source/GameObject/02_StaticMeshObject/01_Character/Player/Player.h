@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "GameObject//02_StaticMeshObject//06_Character//Character.h"
+#include "GameObject//02_StaticMeshObject//01_Character//Character.h"
 
 class StaticMeshManager;
 class Camera;

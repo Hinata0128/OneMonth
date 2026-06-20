@@ -1,6 +1,6 @@
 ﻿#include "Jabaran.h"
 
-#include "System//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
+#include "System//02_Singleton//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 
 Jabaran::Jabaran()
 	: Character	()

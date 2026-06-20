@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "SkinMesh//SkinMesh.h"
-#include "System//00_Manager//ManagerBase.h"
+#include "System//02_Singleton//00_Manager//ManagerBase.h"
 
 /*****************************************************************************
 *	スキンメッシュマネージャークラス
