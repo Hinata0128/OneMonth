@@ -40,6 +40,7 @@ void Player::Update()
 {
 	HandleMovement();
 
+#if 1
 	//ボタンが押されたときに弾を発射する.
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
@@ -58,6 +59,32 @@ void Player::Update()
 		//m_upPlayerShot->Launch(StartPos, Velocity, Radius, Life);
 		PlayerShotManager::GetInstance()->Launch(StartPos, Velocity, Radius, Life);
 	}
+#else
+
+	static bool bPrevSpacePressed = false;
+	bool bCurrentSpacePressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
+
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		//弾の数が 0（画面内に弾がない）のときだけ発射する！
+		if (PlayerShotManager::GetInstance()->GetShotCount() == 0)
+		{
+			//初期パラメータ.
+			D3DXVECTOR3 StartPos = m_Position;
+
+			//プレイヤーの向いている角度から弾が発射するように設定.
+			float sinY = sinf(m_AngleY);
+			float cosY = cosf(m_AngleY);
+			D3DXVECTOR3 PlayerTargetDir = D3DXVECTOR3(sinY, 0.0f, cosY);
+			D3DXVECTOR3 Velocity = PlayerTargetDir * 80.0f;
+			float Radius = 1.0f;
+			float Life = 3.0f;
+
+			//弾を発射
+			PlayerShotManager::GetInstance()->Launch(StartPos, Velocity, Radius, Life);
+		}
+	}
+#endif
 	//弾が存在している時.
 	PlayerShotManager::GetInstance()->Update();
 	

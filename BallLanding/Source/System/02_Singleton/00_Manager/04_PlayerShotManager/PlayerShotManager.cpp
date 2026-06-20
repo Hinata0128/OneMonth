@@ -20,27 +20,26 @@ void PlayerShotManager::Create()
 //動作関数.
 void PlayerShotManager::Update()
 {
-	//範囲for文にして弾の動作を管理していく.
-	for (auto& PlayerShotList : m_upPlayerShotList)
-	{
-		//弾がNULLではないとき.
-		if (PlayerShotList != nullptr)
-		{
-			PlayerShotList->Update();
-		}
-	}
-	//弾の寿命が来たら消去(非表示)にする.
+	//先に寿命が切れている・当たって死亡した弾を削除する.
 	for (auto it = m_upPlayerShotList.begin(); it != m_upPlayerShotList.end();)
 	{
-		//もし、その番号の弾の寿命がきていたら.
-		if ((*it)->Active() == false)
+		//新しく作成したIsActive()でチェックする.
+		if ((*it) == nullptr || (*it)->IsActive() == false)
 		{
 			it = m_upPlayerShotList.erase(it);
 		}
-		//まだ寿命じゃないとき.
 		else
 		{
 			++it;
+		}
+	}
+
+	//生き残っている弾だけを移動「Update」させる.
+	for (auto& PlayerShotList : m_upPlayerShotList)
+	{
+		if (PlayerShotList != nullptr)
+		{
+			PlayerShotList->Update();
 		}
 	}
 }
@@ -76,4 +75,16 @@ void PlayerShotManager::Launch(const D3DXVECTOR3& Pos, const D3DXVECTOR3& Vel, f
 
 	//弾を複製する.
 	m_upPlayerShotList.push_back(std::move(PlayerShotList));
+}
+
+void PlayerShotManager::KillShotByCollider(const std::shared_ptr<BoundingSphere>& sphere)
+{
+	for (auto& shot : m_upPlayerShotList)
+	{
+		if (shot && shot->GetCollider() == sphere)
+		{
+			shot->ShotKill(); // 弾を死亡状態にする
+			break;
+		}
+	}
 }

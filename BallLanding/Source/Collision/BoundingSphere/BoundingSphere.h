@@ -13,23 +13,9 @@ public:
 	enum class Tag : byte
 	{
 		None,
-		Ball,
-		Goal,   
-		Needle,
-		Player,
-		Enemy,
-		PlayerShot,
-		EnemyShot,
-		AstroPlayer,
-		Rock,
-		AstroPlayerShot,
-		AstroBoss,
-		AstroBossShot,
-
-		AstralPlayer,
-		AstralBoss,
-
-		AstralPlayerAttack
+		Player,		//プレイヤー.
+		PlayerShot,	//プレイヤーの弾.
+		Enemy,		//敵.
 	};
 public:
 	BoundingSphere();
