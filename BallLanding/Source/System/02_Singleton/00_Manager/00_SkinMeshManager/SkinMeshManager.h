@@ -26,8 +26,7 @@ public:
 	};
 
 public:
-	// シングルトン関連
-	static SkinMeshManager* GetInstance();
+	SkinMeshManager();
 	~SkinMeshManager() override;
 
 	// ManagerBaseの関数をオーバーライド
@@ -35,11 +34,6 @@ public:
 	void Release() override;
 
 	SkinMesh* GetSkinMeshInstance(SkinList skinNo);
-
-private:
-	SkinMeshManager();
-	SkinMeshManager(const SkinMeshManager&) = delete;
-	SkinMeshManager& operator=(const SkinMeshManager&) = delete;
 
 private:
 	std::unique_ptr<SkinMesh> m_pSkin[static_cast<int>(SkinList::Max)];

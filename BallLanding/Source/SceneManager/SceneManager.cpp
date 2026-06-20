@@ -59,14 +59,6 @@ void SceneManager::Update()
 	{
 		LoadScene(SceneManager::Score);
 	}
-	if (ImGui::Button("Astral"))
-	{
-		LoadScene(SceneManager::Astral);
-	}
-
-
-
-
 	ImGui::End();
 #endif
 	m_pScene->Update();
@@ -108,7 +100,6 @@ void SceneManager::MakeScene(List Scene)
 	switch (Scene)
 	{
 	case SceneManager::OP:
-		//ToDo : クレジットから戻ってきたときにクレジットの音楽を停止してタイトル用の曲に戻す.
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
 		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Title);
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Ending);
@@ -131,19 +122,13 @@ void SceneManager::MakeScene(List Scene)
 		break;
 	case SceneManager::CCredit:
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
-		//ToDo : 今クレジットの音楽をTitleにしているけど最終的には変更する.
 		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Title);
 		m_pScene = std::make_unique<Credit>();
 		break;
 	case SceneManager::Score:
 		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
-		//ToDo : 今クレジットの音楽をTitleにしているけど最終的には変更する.
 		SoundManager::GetInstance()->PlayLoop(SoundManager::BGM_Title);
 		m_pScene = std::make_unique<ResultScore>();
-		break;
-	case SceneManager::Astral:
-		SoundManager::GetInstance()->Stop(SoundManager::BGM_Title);
-		m_pScene = std::make_unique<AstralDuel>();
 		break;
 	default:
 		break;

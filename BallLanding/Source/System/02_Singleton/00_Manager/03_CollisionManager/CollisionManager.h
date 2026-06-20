@@ -15,8 +15,6 @@
 **/
 
 class Camera;
-class AstralPlayer;
-class AstralBoss;
 
 //衝突判定の詳細結果を格納する.
 struct CollisionResult
@@ -35,11 +33,6 @@ public:
 	CollisionManager();
 	~CollisionManager() override;
 
-	static CollisionManager* GetInstance() 
-	{
-		static CollisionManager instance; 
-		return &instance;
-	}
 
 	void Update() override;
 	void Draw() override;
@@ -76,9 +69,6 @@ public:
 	// 点数を設定するための関数を追加
 	void SetScoreValue(int value) { m_ScoreValue = value; }
 
-	void SetAstralPlayer(AstralPlayer* p) { m_pAstralPlayer = p; }
-	void SetAstralBoss(AstralBoss* p) { m_pAstralBoss_New = p; }
-
 	void SetPlayer(Player* p) { m_upPlayer = p; }
 private:
 	//当たり判定の関数をここに書きます
@@ -105,8 +95,6 @@ private:
 
 	Camera* m_pCamera = nullptr;
 
-	AstralPlayer* m_pAstralPlayer = nullptr;
-	AstralBoss* m_pAstralBoss_New = nullptr;
 	//初期化をいったんここでしている.
 	Player* m_upPlayer = nullptr;
 
