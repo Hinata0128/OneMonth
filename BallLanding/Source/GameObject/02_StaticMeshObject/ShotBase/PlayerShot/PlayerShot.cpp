@@ -4,13 +4,14 @@
 PlayerShot::PlayerShot()
 	: ShotBase()
 {
+	//
 	auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::PlayerShot);
 	//設定.
 	//ポインタで取得します.
 	AttachMesh(*pStaticMesh);
 
 	//サイズの変更.
-	D3DXVECTOR3 Scale = { 0.05f,0.05f,0.05f };
+	D3DXVECTOR3 Scale = { 0.5f,0.5f,0.5f };
 	SetScale(Scale);
 	//光遮断.
 	this->SetLightEnable(false);
