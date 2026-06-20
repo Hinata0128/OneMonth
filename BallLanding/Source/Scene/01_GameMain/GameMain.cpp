@@ -10,6 +10,8 @@
 
 #include "SceneManager/SceneManager.h"
 
+#include "..//..//System/02_Singleton/00_Manager/03_CollisionManager/CollisionManager.h"
+
 
 GameMain::GameMain()
 	: SceneBase()
@@ -24,8 +26,6 @@ GameMain::GameMain()
 	, m_pLimitTime(std::make_shared<LimitTime>(100000.0))
 
 	, m_pCamera(std::make_unique<Camera>())
-
-	, m_pAstralPlayer(std::make_unique<AstralPlayer>())
 
 	, m_upPlayer(std::make_unique<Player>())
 	, m_upJabaran(std::make_unique<Jabaran>())
@@ -81,9 +81,8 @@ void GameMain::Update()
 	CollisionManager::GetInstance()->Update();
 	Effect::GetInstance()->Update();
 
-	m_pAstralPlayer->Update();
 	m_upPlayer->Update();
-	//m_upJabaran->Update();
+	m_upJabaran->Update();
 
 	// カメラ
 	m_pCamera->SetAngleY(m_upPlayer->GetAngleY());
@@ -127,7 +126,6 @@ void GameMain::Draw()
 
 	m_upJabaran->Draw();
 	m_upPlayer->Draw();
-	//m_pAstralPlayer->Draw();
 	m_pLimitTime->Draw();
 	Effect::GetInstance()->Draw();
 

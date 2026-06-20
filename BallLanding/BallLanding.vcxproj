@@ -184,10 +184,6 @@
     <ClCompile Include="Source\Collision\BoundingBox\BoundingBox.cpp" />
     <ClCompile Include="Source\Collision\BoundingSphere\BoundingSphere.cpp" />
     <ClCompile Include="Source\Effect\Effect.cpp" />
-    <ClCompile Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\00_AstralPlayer\AstralPlayer.cpp" />
-    <ClCompile Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\00_AstralPlayer\AstralPlayerStateBase\PlayerAttack\PlayerAttack.cpp" />
-    <ClCompile Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\00_AstralPlayer\AstralPlayerStateBase\PlayerIdol\PlayerIdol.cpp" />
-    <ClCompile Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\01_AstralBoss\AstralBoss.cpp" />
     <ClCompile Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\SkinMeshCharacter.cpp" />
     <ClCompile Include="Source\GameObject\00_SkinMeshObject\SkinMeshObject.cpp" />
     <ClCompile Include="Source\GameObject\01_SpriteObject\SpriteObject.cpp" />
@@ -257,11 +253,6 @@
     <ClInclude Include="Source\Effekseer\include\Effekseer.Modules.h" />
     <ClInclude Include="Source\Effekseer\include\Effekseer.SIMD.h" />
     <ClInclude Include="Source\Effekseer\include\EffekseerRendererDX11.h" />
-    <ClInclude Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\00_AstralPlayer\AstralPlayer.h" />
-    <ClInclude Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\00_AstralPlayer\AstralPlayerStateBase\AstralPlayerStateBase.h" />
-    <ClInclude Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\00_AstralPlayer\AstralPlayerStateBase\PlayerAttack\PlayerAttack.h" />
-    <ClInclude Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\00_AstralPlayer\AstralPlayerStateBase\PlayerIdol\PlayerIdol.h" />
-    <ClInclude Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\01_AstralBoss\AstralBoss.h" />
     <ClInclude Include="Source\GameObject\00_SkinMeshObject\00_SkinMeshCharacter\SkinMeshCharacter.h" />
     <ClInclude Include="Source\GameObject\00_SkinMeshObject\SkinMeshObject.h" />
     <ClInclude Include="Source\GameObject\01_SpriteObject\SpriteObject.h" />

@@ -11,6 +11,12 @@
 class BoundingBox
 {
 public:
+	enum class Tag : byte
+	{
+		None,
+		Enemy,
+	};
+public:
 	BoundingBox();
 	~BoundingBox();
 
@@ -50,6 +56,18 @@ public:
 	//現在のAABBの最大座標を取得する.
 	const D3DXVECTOR3& GetMax() const { return m_MaxPosition; }
 
+	void SetTag(Tag tag) 
+	{
+		m_Tag = tag;
+	};
+	Tag GetTag() const
+	{
+		return m_Tag;
+	};
+
+	void SetDead(bool dead) { m_isDead = dead; }
+	bool IsDead() const { return m_isDead; }
+
 private:
 	D3DXVECTOR3		m_MinPosition;	//AABBの最小座標.
 	D3DXVECTOR3		m_MaxPosition;	//AABBの最大座標.
@@ -59,5 +77,8 @@ private:
 	StaticMesh*		m_pMesh;
 	D3DXVECTOR3		m_Position;	//中心座標.
 	float			m_Radius;	//半径(長さ).
+
+	Tag  m_Tag;
+	bool m_isDead;
 
 };

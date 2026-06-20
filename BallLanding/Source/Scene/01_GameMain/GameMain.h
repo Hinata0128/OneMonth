@@ -17,12 +17,12 @@
 
 #include "GameObject/02_StaticMeshObject/00_Ground/Ground.h"
 
-#include "GameObject/00_SkinMeshObject/00_SkinMeshCharacter/00_AstralPlayer/AstralPlayer.h"
 
 #include "GameObject\02_StaticMeshObject\01_Character\Player\Player.h"
 #include "GameObject\02_StaticMeshObject\01_Character\Jabaran\Jabaran.h"
 
 class Timer;
+class CollisionManager;
 
 /*********************************************
 *	ゲームメイン画像クラス.
@@ -61,7 +61,6 @@ private:
 
 	std::unique_ptr<Camera> m_pCamera;
 
-	std::unique_ptr<AstralPlayer> m_pAstralPlayer;
 	std::unique_ptr<Player> m_upPlayer;
 	std::unique_ptr<Jabaran> m_upJabaran;
 

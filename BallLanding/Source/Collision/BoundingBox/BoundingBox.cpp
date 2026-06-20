@@ -21,6 +21,8 @@ BoundingBox::BoundingBox()
     , m_pMesh               ( nullptr )
     , m_Position            {}
     , m_Radius              ( 0.0f )
+    , m_Tag                 ( Tag::None )  
+    , m_isDead              ( false )
 {
 }
 

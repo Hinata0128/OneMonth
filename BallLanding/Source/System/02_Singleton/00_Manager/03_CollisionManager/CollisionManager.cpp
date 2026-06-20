@@ -1,18 +1,11 @@
 ﻿#include "CollisionManager.h"
-
 #include "Effect/Effect.h"
-
 #include <algorithm>
-
 #include "System//02_Singleton//01_Timer//Timer.h"
-
 #include "Sound//SoundManager.h"
-
 #include "System/02_Singleton/02_Score/Score.h"
-
 #include "System/02_Singleton//00_Manager/02_ImGuiManager/ImGuiManager.h"
-
-
+#include "..//..//00_Manager/04_PlayerShotManager/PlayerShotManager.h"
 #include "..//..//..//06_Camera/Camera.h"
 
 CollisionManager::CollisionManager()
@@ -27,8 +20,6 @@ CollisionManager::~CollisionManager()
 
 void CollisionManager::Update()
 {
-
-    // 🌟 クールタイム減少
     if (m_BossHitEffectCooldown > 0.0f)
     {
         m_BossHitEffectCooldown -= Timer::GetInstance().DeltaTime();
@@ -41,11 +32,10 @@ void CollisionManager::Update()
     m_pBSphere.erase(
         std::remove_if(m_pBSphere.begin(), m_pBSphere.end(),
             [](const std::shared_ptr<BoundingSphere>& s) {
-                return s->IsDead(); // IsDeadがtrueのものをリストから外す
+                return s->IsDead(); //IsDeadがtrueのものをリストから外す.
             }),
         m_pBSphere.end()
     );
-
 }
 
 void CollisionManager::Draw()
@@ -54,23 +44,21 @@ void CollisionManager::Draw()
     //スフィア描画
     for (const auto& sphere : m_pBSphere)
     {
-        if (sphere) sphere->Draw();	
+        if (sphere) sphere->Draw();
     }
-
 
     //ボックス描画
     for (const auto& box : m_pBBox)
     {
-        if (box) box->Draw();		
+        if (box) box->Draw();
     }
 #endif
 }
 
 void CollisionManager::Create()
 {
-    m_pBSphere.clear();	
-    m_pBBox.clear();	
-
+    m_pBSphere.clear();
+    m_pBBox.clear();
 }
 
 void CollisionManager::Release()
@@ -95,42 +83,37 @@ void CollisionManager::Clear()
 
 void CollisionManager::AllCollider()
 {
-    //球と球の当たり判定
-    for (size_t i = 0; i < m_pBSphere.size(); ++i)
+    //敵とプレイヤーの弾の当たり判定.
+    for (auto& shot : m_pBSphere)
     {
-        for (size_t j = i + 1; j < m_pBSphere.size(); ++j)
+        //既に死んでいる、またはプレイヤーの弾でなければスキップ.
+        if (!shot || shot->IsDead() || shot->GetTag() != BoundingSphere::Tag::PlayerShot) continue;
+
+        for (auto& enemy : m_pBSphere)
         {
-            auto& sphereA = m_pBSphere[i];
-            auto& sphereB = m_pBSphere[j];
+            if (!enemy || enemy->IsDead() || enemy->GetTag() != BoundingSphere::Tag::Enemy) continue;
 
-            if (sphereA->IsDead() || sphereB->IsDead()) continue;
-
-            if (CheckSphereSphere(*sphereA, *sphereB))
+            //スフィア同士の当たり判定.
+            if (CheckSphereSphere(*shot, *enemy))
             {
+                //着弾エフェクト再生.
+                Effect::GetInstance()->Play(
+                    Effect::Laser01,
+                    shot->GetPostion()
+                );
 
-                // 各タグごとの衝突処理
-                if ((sphereA->GetTag() == BoundingSphere::Tag::Ball && sphereB->GetTag() == BoundingSphere::Tag::Goal) ||
-                    (sphereB->GetTag() == BoundingSphere::Tag::Ball && sphereA->GetTag() == BoundingSphere::Tag::Goal))
+                //コライダーを死亡状態にする.
+                shot->SetDead(true);
+
+                //弾本体を即座に死亡状態にする.
+                auto shotManager = PlayerShotManager::GetInstance();
+                if (shotManager)
                 {
-                    HandleGoal(sphereA, sphereB);
+                    shotManager->KillShotByCollider(shot);
                 }
 
-            }
-        }
-    }
-
-    //かごと壁の当たり判定.
-    for (auto& sphere : m_pBSphere)
-    {
-        if (sphere->GetTag() != BoundingSphere::Tag::Goal || sphere->IsDead()) continue;
-
-        for (auto& box : m_pBBox)
-        {
-            CollisionResult result = CheckSphereBoxDetailed(*sphere, *box);
-            if (result.IsHit)
-            {
-                sphere->SetPosition(sphere->GetPostion() + result.PushVector);
-
+                //この弾は既に消滅したので、他の敵との判定をスキップして次の弾へ.
+                break;
             }
         }
     }
@@ -190,18 +173,10 @@ CollisionResult CollisionManager::CheckSphereBoxDetailed(const BoundingSphere& s
     return result;
 }
 
-//衝突した際の具体的な処理.
 void CollisionManager::HandleGoal(std::shared_ptr<BoundingSphere> a, std::shared_ptr<BoundingSphere> b)
 {
-    //スコア加算.
-    //Todo : スコアクラスを作成していないので今はGameMainで呼んでいる.
     m_pTargetScore->Add(m_ScoreValue);
-
-    //ボールを消去対象にする.
-    if (a->GetTag() == BoundingSphere::Tag::Ball) a->SetDead(true);
-    if (b->GetTag() == BoundingSphere::Tag::Ball) b->SetDead(true);
 }
-
 
 bool CollisionManager::CheckSphereSphere(const BoundingSphere& a, const BoundingSphere& b)
 {
@@ -217,4 +192,3 @@ bool CollisionManager::CheckSphereBox(const BoundingSphere& sphere, const Boundi
 {
     return CheckSphereBoxDetailed(sphere, box).IsHit;
 }
-

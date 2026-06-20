@@ -1,5 +1,6 @@
 #pragma once
 #include "..//ShotBase.h"
+#include "Collision/BoundingSphere/BoundingSphere.h"
 
 /**********************************************************
 *	プレイヤーの攻撃.
@@ -7,6 +8,7 @@
 **/
 
 class StaticMeshManager;
+class CollisionManager;
 
 class PlayerShot
 	: public ShotBase
@@ -27,6 +29,18 @@ public:
 				float Radius,
 				float Life) override;
 
-private:
+	//弾を強制的に消す.
+	void ShotKill()
+	{
+		m_IsDead = true; //独自フラグを確実に死亡にする
+		if (m_pCollider) m_pCollider->SetDead(true);
+	}
 
+	//親クラスのm_Lifeに依存せず、純粋に「死亡フラグが立っていないか」だけで判定する.
+	bool IsActive() const { return !m_IsDead; }
+	std::shared_ptr<BoundingSphere> GetCollider() const { return m_pCollider; }
+private:
+	//当たり判定のコライダー.
+	std::shared_ptr<BoundingSphere> m_pCollider;
+	bool m_IsDead;
 };
