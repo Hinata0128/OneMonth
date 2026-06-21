@@ -4,6 +4,11 @@
 #include "..//..//..//..//System/02_Singleton/00_Manager/03_CollisionManager/CollisionManager.h"
 #include "..//..//ShotBase/JabaranShot/JabaranShot.h"
 
+namespace ColliderPosNumber
+{
+	float ColliderSettingPos = 1.5f
+}
+
 Jabaran::Jabaran()
 	: Character			()
 	, m_pCollider		( nullptr )
@@ -27,11 +32,12 @@ Jabaran::Jabaran()
 	Init();
 
 	m_pCollider = std::make_shared<BoundingSphere>();
-	m_pCollider->SetTag(BoundingSphere::Tag::Enemy);
+	m_pCollider->SetTag(BoundingSphere::Tag::Jabaran);
 	m_pCollider->CreateSphereForMesh(*pStaticMesh);
 
-	float adjustedRadius = m_pCollider->GetRadius() * Scale.x;
+	float adjustedRadius = m_pCollider->GetRadius() * 0.005f;
 	m_pCollider->SetRadius(adjustedRadius);
+
 
 	CollisionManager::GetInstance()->AddSphere(m_pCollider);
 }
@@ -49,12 +55,13 @@ void Jabaran::Update()
 		return;
 	}
 
-	Character::Update();
 
 	if (m_pCollider != nullptr)
 	{
 		//敵の座標を常にコライダーに同期.
-		m_pCollider->SetPosition(m_Position);
+		D3DXVECTOR3 ColliderPos = m_Position;
+		ColliderPos.y += ColliderPosNumber::ColliderSettingPos;
+		m_pCollider->SetPosition(ColliderPos);
 
 		if (m_pCollider->IsDead())
 		{
@@ -70,18 +77,17 @@ void Jabaran::Update()
 		{
 			m_upJabaranShot = std::make_unique<JabaranShot>();
 
-			// Launch(発射位置, 速度の基準ベクトル, 半径, 寿命)
-			// ※第2引数のベクトルの長さ（スピード）を、JabaranShot側で自動計算の基準に使います
 			D3DXVECTOR3 baseVel = { 0.0f, 0.0f, 5.0f }; // スピード5.0f
 			m_upJabaranShot->Launch(m_Position, baseVel, 1.0f, 3.0f);
 		}
 	}
 
-	// 🌟【追加】弾が生成されていたら更新処理を呼ぶ
 	if (m_upJabaranShot != nullptr)
 	{
 		m_upJabaranShot->Update();
 	}
+
+	Character::Update();
 }
 
 void Jabaran::Draw()
@@ -99,10 +105,10 @@ void Jabaran::Draw()
 		m_upJabaranShot->Draw();
 	}
 #ifdef _DEBUG
-	/*if (m_pCollider)
+	if (m_pCollider)
 	{
 		m_pCollider->Draw();
-	}*/
+	}
 #endif
 }
 

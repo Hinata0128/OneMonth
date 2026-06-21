@@ -25,29 +25,32 @@ JabaranShot::~JabaranShot()
 
 void JabaranShot::Update()
 {
-	// 🌟 すでに死亡している（または非アクティブ）なら一切の更新処理をスキップ
-	if (m_IsDead) return;
+	if (m_pCollider && m_pCollider->IsDead())
+	{
+		m_IsDead = true;
+	}
 
-	// ShotBase側の移動処理や、m_Lifeの減少処理などを呼び出す
+	//すでに死亡しているならこれ以降の前進処理をさせず終了.
+	if (!IsActive())
+	{
+		return;
+	}
+
+	//ここで初めて親クラスの前進処理や寿命カウントが走る.
 	ShotBase::Update();
 
-	// 🌟【寿命判定の連動】
-	// ShotBase側の寿命が尽きた（Active()がfalseになった）場合
-	if (!Active())
+	//時間経過による親クラス側の寿命切れをここでキャッチしてフラグを倒す.
+	if (ShotBase::Active() == false)
 	{
-		ShotKill(); // 確実に m_IsDead = true にする
-		return;     // 死亡したので以降の処理はスキップ
+		m_IsDead = true;
 	}
 
 	if (m_pCollider != nullptr)
 	{
-		// 座標をコライダーに同期
 		m_pCollider->SetPosition(m_Position);
-
-		// CollisionManager側でコライダーが死んだ（プレイヤーに当たった）時
-		if (m_pCollider->IsDead())
+		if (m_IsDead)
 		{
-			ShotKill();
+			m_pCollider->SetDead(true);
 		}
 	}
 }
@@ -62,29 +65,23 @@ void JabaranShot::Draw()
 
 void JabaranShot::Launch(const D3DXVECTOR3& Pos, const D3DXVECTOR3& Vel, float Radius, float Life)
 {
-	// 🌟 1. 独自死亡フラグを false にリセット（これで再発射可能になります）
 	m_IsDead = false;
 
-	// 2. 基底クラスの Launch を呼んで、m_Life に寿命（3.0fなど）を設定させる
 	ShotBase::Launch(Pos, Vel, Radius, Life);
 
 	m_Position = Pos;
 
-	// 3. 自機狙い計算
 	Player* pPlayer = CollisionManager::GetInstance()->GetPlayer();
 	if (pPlayer != nullptr)
 	{
 		D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 
-		// 敵（Pos）からプレイヤー（playerPos）への方向ベクトルを計算
 		D3DXVECTOR3 dir = playerPos - Pos;
 		D3DXVec3Normalize(&dir, &dir);
 
-		// 引数の Vel から移動スピードを割り出す
 		float speed = D3DXVec3Length(&Vel);
 		if (speed < 0.001f) speed = 5.0f;
 
-		// 計算した自機狙いベクトルを速度に設定
 		m_Velocity = dir * speed;
 	}
 	else
@@ -92,15 +89,15 @@ void JabaranShot::Launch(const D3DXVECTOR3& Pos, const D3DXVECTOR3& Vel, float R
 		m_Velocity = Vel;
 	}
 	// コライダーの生成と登録
-	//auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::PlayerShot);
-	//m_pCollider = std::make_shared<BoundingSphere>();
-	//m_pCollider->SetTag(BoundingSphere::Tag::EnemyShot); // 🌟コライダー側に「敵の弾」のタグが必要な場合は要確認
-	//m_pCollider->CreateSphereForMesh(*pStaticMesh);
-	//
-	//// スケールを考慮した半径の設定
-	//float adjustedRadius = Radius * GetScale().x;
-	//m_pCollider->SetRadius(adjustedRadius);
-	//
-	//// コライダーマネージャーに登録する
-	//CollisionManager::GetInstance()->AddSphere(m_pCollider);
+	auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::PlayerShot);
+	m_pCollider = std::make_shared<BoundingSphere>();
+	m_pCollider->SetTag(BoundingSphere::Tag::JabaranShot); 
+	m_pCollider->CreateSphereForMesh(*pStaticMesh);
+	
+	// スケールを考慮した半径の設定
+	float adjustedRadius = Radius * GetScale().x;
+	m_pCollider->SetRadius(adjustedRadius);
+	
+	// コライダーマネージャーに登録する
+	CollisionManager::GetInstance()->AddSphere(m_pCollider);
 }

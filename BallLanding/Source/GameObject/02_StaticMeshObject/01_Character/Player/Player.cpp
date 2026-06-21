@@ -3,13 +3,16 @@
 #include "System//02_Singleton//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "System/06_Camera/Camera.h"
 #include "System\02_Singleton\00_Manager\04_PlayerShotManager\PlayerShotManager.h"
+#include "..//..//..//..//System/02_Singleton/00_Manager/03_CollisionManager/CollisionManager.h"
+
 
 Player::Player()
-	: Character()
-	, m_pCamera(nullptr)
-	, m_AngleY(0.0f)      //旋回角度.
-	, m_MoveSpeed(0.2f)   //移動速度.
-	, m_RotSpeed(0.05f)   //旋回速度.
+	: Character		()
+	, m_pCamera		( nullptr )
+	, m_AngleY		( 0.0f )    //旋回角度.
+	, m_MoveSpeed	( 0.2f )	//移動速度.
+	, m_RotSpeed	( 0.05f )   //旋回速度.
+	, m_pCollider	( nullptr )
 
 {
 	//敵のスタティックメッシュを呼び込む.
@@ -28,6 +31,15 @@ Player::Player()
 	//光遮断.
 	this->SetLightEnable(false);
 	Init();
+	
+	m_pCollider = std::make_shared<BoundingSphere>();
+	m_pCollider->SetTag(BoundingSphere::Tag::Player);
+	m_pCollider->CreateSphereForMesh(*pStaticMesh);
+
+	float adjustedRadius = m_pCollider->GetRadius() * 2.5f;
+	m_pCollider->SetRadius(adjustedRadius);
+
+	CollisionManager::GetInstance()->AddSphere(m_pCollider);
 
 
 }
@@ -87,6 +99,8 @@ void Player::Update()
 #endif
 	//弾が存在している時.
 	PlayerShotManager::GetInstance()->Update();
+
+	m_pCollider->SetPosition(m_Position);
 	
 	Character::Update();
 }
@@ -95,6 +109,14 @@ void Player::Draw()
 {
 	PlayerShotManager::GetInstance()->Draw();
 	Character::Draw();
+
+#ifdef _DEBUG
+	if (m_pCollider)
+	{
+		m_pCollider->Draw();
+	}
+#endif
+
 }
 
 void Player::Init()
