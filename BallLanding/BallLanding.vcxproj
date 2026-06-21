@@ -196,6 +196,7 @@
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\01_Character\Character.cpp" />
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\01_Character\Jabaran\Jabaran.cpp" />
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\01_Character\Player\Player.cpp" />
+    <ClCompile Include="Source\GameObject\02_StaticMeshObject\ShotBase\JabaranShot\JabaranShot.cpp" />
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\ShotBase\PlayerShot\PlayerShot.cpp" />
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\ShotBase\ShotBase.cpp" />
     <ClCompile Include="Source\GameObject\03_UIObject\00_LimitTime\LimitTime.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\01_Character\Character.h" />
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\01_Character\Jabaran\Jabaran.h" />
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\01_Character\Player\Player.h" />
+    <ClInclude Include="Source\GameObject\02_StaticMeshObject\ShotBase\JabaranShot\JabaranShot.h" />
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\ShotBase\PlayerShot\PlayerShot.h" />
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\ShotBase\ShotBase.h" />
     <ClInclude Include="Source\GameObject\03_UIObject\00_LimitTime\LimitTime.h" />

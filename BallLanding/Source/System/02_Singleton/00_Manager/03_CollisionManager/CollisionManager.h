@@ -70,6 +70,7 @@ public:
 	void SetScoreValue(int value) { m_ScoreValue = value; }
 
 	void SetPlayer(Player* p) { m_upPlayer = p; }
+	Player* GetPlayer() const { return m_upPlayer; }
 private:
 	//当たり判定の関数をここに書きます
 	bool CheckSphereSphere(const BoundingSphere& a, const BoundingSphere& b);	//スフィア同士の判定. 

@@ -2,9 +2,12 @@
 
 #include "System//02_Singleton//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "..//..//..//..//System/02_Singleton/00_Manager/03_CollisionManager/CollisionManager.h"
+#include "..//..//ShotBase/JabaranShot/JabaranShot.h"
 
 Jabaran::Jabaran()
-	: Character	()
+	: Character			()
+	, m_pCollider		( nullptr )
+	, m_upJabaranShot	( nullptr )
 {
 	//敵のスタティックメッシュを呼び込む.
 	auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Jabaran);
@@ -59,6 +62,26 @@ void Jabaran::Update()
 			// ここで敵自身を消滅、または死亡アニメーションに移行させてください
 		}
 	}
+
+	if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
+	{
+		// すでに弾が存在していて活動中なら新しく撃たない（単体テスト用制限）
+		if (m_upJabaranShot == nullptr || !m_upJabaranShot->IsActive())
+		{
+			m_upJabaranShot = std::make_unique<JabaranShot>();
+
+			// Launch(発射位置, 速度の基準ベクトル, 半径, 寿命)
+			// ※第2引数のベクトルの長さ（スピード）を、JabaranShot側で自動計算の基準に使います
+			D3DXVECTOR3 baseVel = { 0.0f, 0.0f, 5.0f }; // スピード5.0f
+			m_upJabaranShot->Launch(m_Position, baseVel, 1.0f, 3.0f);
+		}
+	}
+
+	// 🌟【追加】弾が生成されていたら更新処理を呼ぶ
+	if (m_upJabaranShot != nullptr)
+	{
+		m_upJabaranShot->Update();
+	}
 }
 
 void Jabaran::Draw()
@@ -70,6 +93,11 @@ void Jabaran::Draw()
 	}
 
 	Character::Draw();
+
+	if (m_upJabaranShot != nullptr && m_upJabaranShot->IsActive())
+	{
+		m_upJabaranShot->Draw();
+	}
 #ifdef _DEBUG
 	/*if (m_pCollider)
 	{
