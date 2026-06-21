@@ -2,17 +2,16 @@
 
 #include "System//02_Singleton//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "..//..//..//..//System/02_Singleton/00_Manager/03_CollisionManager/CollisionManager.h"
-#include "..//..//ShotBase/JabaranShot/JabaranShot.h"
+#include "..//..//..//..//System/02_Singleton/00_Manager/05_JabaranShotManager/JabaranShotManager.h"
 
 namespace ColliderPosNumber
 {
-	float ColliderSettingPos = 1.5f
+	float ColliderSettingPos = 1.5f;
 }
 
 Jabaran::Jabaran()
 	: Character			()
 	, m_pCollider		( nullptr )
-	, m_upJabaranShot	( nullptr )
 {
 	//敵のスタティックメッシュを呼び込む.
 	auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Jabaran);
@@ -72,20 +71,21 @@ void Jabaran::Update()
 
 	if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 	{
-		// すでに弾が存在していて活動中なら新しく撃たない（単体テスト用制限）
-		if (m_upJabaranShot == nullptr || !m_upJabaranShot->IsActive())
-		{
-			m_upJabaranShot = std::make_unique<JabaranShot>();
-
-			D3DXVECTOR3 baseVel = { 0.0f, 0.0f, 5.0f }; // スピード5.0f
-			m_upJabaranShot->Launch(m_Position, baseVel, 1.0f, 3.0f);
-		}
+		//初期パラメータの設定.
+		//敵の位置取得.
+		D3DXVECTOR3 StartPos = m_Position;
+		//弾の速度の計算.
+		D3DXVECTOR3 JabaranTargetDir = { 0.0f, 0.0f, 0.0f };
+		D3DXVECTOR3 Velocity = JabaranTargetDir * 50.0f;
+		//弾の大きさ.
+		float Radius = 1.0f;
+		//弾の寿命.
+		float Life = 3.0f;
+		//生成直後弾の設定可能.
+		JabaranShotManager::GetInstance()->Launch(StartPos, Velocity, Radius, Life);
 	}
 
-	if (m_upJabaranShot != nullptr)
-	{
-		m_upJabaranShot->Update();
-	}
+	JabaranShotManager::GetInstance()->Update();
 
 	Character::Update();
 }
@@ -100,10 +100,8 @@ void Jabaran::Draw()
 
 	Character::Draw();
 
-	if (m_upJabaranShot != nullptr && m_upJabaranShot->IsActive())
-	{
-		m_upJabaranShot->Draw();
-	}
+	JabaranShotManager::GetInstance()->Draw();
+
 #ifdef _DEBUG
 	if (m_pCollider)
 	{

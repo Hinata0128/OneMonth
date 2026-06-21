@@ -4,7 +4,7 @@
 
 class StaticMeshManager;
 class CollisionManager;
-class JabaranShot;
+class JabaranShotManager;
 
 class Jabaran final
 	: public Character
@@ -22,5 +22,4 @@ public:
 	bool GetDead() const override;
 private:
 	std::shared_ptr<BoundingSphere> m_pCollider;
-	std::unique_ptr<JabaranShot> m_upJabaranShot;
 };
