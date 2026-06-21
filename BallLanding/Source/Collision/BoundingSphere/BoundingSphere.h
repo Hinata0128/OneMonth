@@ -9,13 +9,15 @@
 class BoundingSphere
 {
 public:
-	//当たり判定を使っているクラス.
+	//当たり判定をしようするクラスの当たり判定名をここに登録する.
 	enum class Tag : byte
 	{
 		None,
-		Player,		//プレイヤー.
-		PlayerShot,	//プレイヤーの弾.
-		Enemy,		//敵.
+		Player,			//プレイヤー.
+		PlayerShot,		//プレイヤーの弾.
+		Jabaran,		//敵.
+		JabaranShot,	//敵の弾.
+
 	};
 public:
 	BoundingSphere();

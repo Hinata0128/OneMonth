@@ -91,7 +91,7 @@ void CollisionManager::AllCollider()
 
         for (auto& enemy : m_pBSphere)
         {
-            if (!enemy || enemy->IsDead() || enemy->GetTag() != BoundingSphere::Tag::Enemy) continue;
+            if (!enemy || enemy->IsDead() || enemy->GetTag() != BoundingSphere::Tag::Jabaran) continue;
 
             //スフィア同士の当たり判定.
             if (CheckSphereSphere(*shot, *enemy))
@@ -117,6 +117,42 @@ void CollisionManager::AllCollider()
             }
         }
     }
+
+    //Playerと敵の弾の当たり判定(球対球).
+    for (auto& shot : m_pBSphere)
+    {
+        //既に死んでいる、またはプレイヤーの弾でなければスキップ.
+        if (!shot || shot->IsDead() || shot->GetTag() != BoundingSphere::Tag::JabaranShot) continue;
+
+        for (auto& Player : m_pBSphere)
+        {
+            if (!Player || Player->IsDead() || Player->GetTag() != BoundingSphere::Tag::Player) continue;
+
+            //スフィア同士の当たり判定.
+            if (CheckSphereSphere(*shot, *Player))
+            {
+                //着弾エフェクト再生.
+                Effect::GetInstance()->Play(
+                    Effect::Laser01,
+                    shot->GetPostion()
+                );
+
+                //コライダーを死亡状態にする.
+                shot->SetDead(true);
+
+                //弾本体を即座に死亡状態にする.
+                auto shotManager = PlayerShotManager::GetInstance();
+                if (shotManager)
+                {
+                    shotManager->KillShotByCollider(shot);
+                }
+
+                //この弾は既に消滅したので、他の敵との判定をスキップして次の弾へ.
+                break;
+            }
+        }
+    }
+
 }
 
 CollisionResult CollisionManager::CheckSphereBoxDetailed(const BoundingSphere& sphere, const BoundingBox& box)

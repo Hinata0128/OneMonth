@@ -1,9 +1,12 @@
 ﻿#pragma once
 #include "GameObject//02_StaticMeshObject//01_Character//Character.h"
+#include "..//..//..//..//Collision/BoundingSphere/BoundingSphere.h"
 
 class StaticMeshManager;
 class Camera;
 class PlayerShotManager;
+class CollisionManager;
+
 
 class Player
 	: public Character
@@ -41,4 +44,7 @@ private:
 	float   m_MoveSpeed;   //移動速度.
 	float   m_RotSpeed;    //旋回速度.
 	float	m_AngleY;
+
+	std::shared_ptr<BoundingSphere> m_pCollider;
+
 };
