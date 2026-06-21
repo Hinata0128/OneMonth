@@ -32,10 +32,11 @@ Player::Player()
 	this->SetLightEnable(false);
 	Init();
 	
+	//Playerの当たり判定を設定・登録している.
 	m_pCollider = std::make_shared<BoundingSphere>();
 	m_pCollider->SetTag(BoundingSphere::Tag::Player);
 	m_pCollider->CreateSphereForMesh(*pStaticMesh);
-
+	//当たり判定のサイズを登録.
 	float adjustedRadius = m_pCollider->GetRadius() * 2.5f;
 	m_pCollider->SetRadius(adjustedRadius);
 
@@ -58,6 +59,7 @@ void Player::Update()
 	{
 
 		//初期パラメータ.
+		//プレイヤーの位置を取得.
 		D3DXVECTOR3 StartPos = m_Position;
 		//プレイヤーの向いている角度から弾が発射するように設定.
 		float sinY = sinf(m_AngleY);
