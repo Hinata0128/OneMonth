@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "..//ShotBase.h"
 #include "Collision/BoundingSphere/BoundingSphere.h"
 

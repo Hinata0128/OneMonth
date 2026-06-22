@@ -1,4 +1,4 @@
-#include "JabaranShotManager.h"
+﻿#include "JabaranShotManager.h"
 #include "..//..//..//..//GameObject//02_StaticMeshObject//ShotBase//JabaranShot//JabaranShot.h"
 
 //コンストラクタ.
