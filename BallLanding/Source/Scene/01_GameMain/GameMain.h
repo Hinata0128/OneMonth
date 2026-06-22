@@ -19,7 +19,7 @@
 
 
 #include "GameObject\02_StaticMeshObject\01_Character\Player\Player.h"
-#include "GameObject\02_StaticMeshObject\01_Character\Jabaran\Jabaran.h"
+#include "..//..//System/02_Singleton/00_Manager/06_JabaranManager/JabaranManager.h"
 
 class Timer;
 class CollisionManager;
@@ -62,6 +62,5 @@ private:
 	std::unique_ptr<Camera> m_pCamera;
 
 	std::unique_ptr<Player> m_upPlayer;
-	std::unique_ptr<Jabaran> m_upJabaran;
 
 };

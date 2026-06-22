@@ -83,33 +83,42 @@ void CollisionManager::Clear()
 
 void CollisionManager::AllCollider()
 {
-    //敵とプレイヤーの弾の当たり判定.
-    for (auto& shot : m_pBSphere)
+    for (auto& PlayerShot : m_pBSphere)
     {
         //既に死んでいる、またはプレイヤーの弾でなければスキップ.
-        if (!shot || shot->IsDead() || shot->GetTag() != BoundingSphere::Tag::PlayerShot) continue;
-
-        for (auto& enemy : m_pBSphere)
+        if (!PlayerShot || PlayerShot->IsDead() || PlayerShot->GetTag() != BoundingSphere::Tag::PlayerShot)
         {
-            if (!enemy || enemy->IsDead() || enemy->GetTag() != BoundingSphere::Tag::Jabaran) continue;
+            continue;
+        }
 
-            //スフィア同士の当たり判定.
-            if (CheckSphereSphere(*shot, *enemy))
+        for (auto& JabaranList : m_pBSphere)
+        {
+            //既に死んでいる、または敵Jabaranでなければスキップ.
+            if (!JabaranList || JabaranList->IsDead() || JabaranList->GetTag() != BoundingSphere::Tag::Jabaran)
             {
-                //着弾エフェクト再生.
+                continue;
+            }
+
+            // スフィア同士の当たり判定（CheckSphereSphere を使用）
+            if (CheckSphereSphere(*PlayerShot, *JabaranList))
+            {
+                // 着弾エフェクト再生.
                 Effect::GetInstance()->Play(
                     Effect::Laser01,
-                    shot->GetPostion()
+                    PlayerShot->GetPostion()
                 );
 
-                //コライダーを死亡状態にする.
-                shot->SetDead(true);
+                //弾のコライダーを死亡状態にする.
+                PlayerShot->SetDead(true);
+
+                //敵のコライダーを死亡状態にする.
+                JabaranList->SetDead(true);
 
                 //弾本体を即座に死亡状態にする.
                 auto shotManager = PlayerShotManager::GetInstance();
                 if (shotManager)
                 {
-                    shotManager->KillShotByCollider(shot);
+                    shotManager->KillShotByCollider(PlayerShot);
                 }
 
                 //この弾は既に消滅したので、他の敵との判定をスキップして次の弾へ.

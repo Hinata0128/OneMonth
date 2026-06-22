@@ -12,6 +12,7 @@ namespace ColliderPosNumber
 Jabaran::Jabaran()
 	: Character			()
 	, m_pCollider		( nullptr )
+	, m_Dead			( false )
 {
 	//敵のスタティックメッシュを呼び込む.
 	auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Jabaran);
@@ -64,8 +65,7 @@ void Jabaran::Update()
 
 		if (m_pCollider->IsDead())
 		{
-			// TODO: 敵の死亡フラグを立てる（例：m_isDead = true; など）
-			// ここで敵自身を消滅、または死亡アニメーションに移行させてください
+			m_Dead = true;
 		}
 	}
 
@@ -116,5 +116,5 @@ void Jabaran::Init()
 
 bool Jabaran::GetDead() const
 {
-	return false;
+	return m_Dead;
 }
