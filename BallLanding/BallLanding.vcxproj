@@ -231,6 +231,7 @@
     <ClCompile Include="Source\System\02_Singleton\00_Manager\04_PlayerShotManager\PlayerShotManager.cpp" />
     <ClCompile Include="Source\System\01_Renderer\Renderer.cpp" />
     <ClCompile Include="Source\System\02_Singleton\00_Manager\05_JabaranShotManager\JabaranShotManager.cpp" />
+    <ClCompile Include="Source\System\02_Singleton\00_Manager\06_JabaranManager\JabaranManager.cpp" />
     <ClCompile Include="Source\System\02_Singleton\01_Timer\Timer.cpp" />
     <ClCompile Include="Source\System\02_Singleton\02_Score\Score.cpp" />
     <ClCompile Include="Source\System\02_Singleton\02_Score\ScoreManager.cpp" />
@@ -297,6 +298,7 @@
     <ClInclude Include="Source\System\02_Singleton\00_Manager\03_CollisionManager\CollisionManager.h" />
     <ClInclude Include="Source\System\02_Singleton\00_Manager\04_PlayerShotManager\PlayerShotManager.h" />
     <ClInclude Include="Source\System\02_Singleton\00_Manager\05_JabaranShotManager\JabaranShotManager.h" />
+    <ClInclude Include="Source\System\02_Singleton\00_Manager\06_JabaranManager\JabaranManager.h" />
     <ClInclude Include="Source\System\02_Singleton\00_Manager\ManagerBase.h" />
     <ClInclude Include="Source\System\01_Renderer\Renderer.h" />
     <ClInclude Include="Source\System\02_Singleton\01_Timer\Timer.h" />

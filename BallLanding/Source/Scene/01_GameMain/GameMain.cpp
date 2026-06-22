@@ -28,7 +28,6 @@ GameMain::GameMain()
 	, m_pCamera(std::make_unique<Camera>())
 
 	, m_upPlayer(std::make_unique<Player>())
-	, m_upJabaran(std::make_unique<Jabaran>())
 
 {
 	m_pDx11 = DirectX11::GetInstance();
@@ -82,7 +81,7 @@ void GameMain::Update()
 	Effect::GetInstance()->Update();
 
 	m_upPlayer->Update();
-	m_upJabaran->Update();
+	JabaranManager::GetInstance()->Update();
 
 	// カメラ
 	m_pCamera->SetAngleY(m_upPlayer->GetAngleY());
@@ -124,7 +123,7 @@ void GameMain::Draw()
 
 	m_pGround->Draw();
 
-	m_upJabaran->Draw();
+	JabaranManager::GetInstance()->Draw();
 	m_upPlayer->Draw();
 	m_pLimitTime->Draw();
 	Effect::GetInstance()->Draw();
