@@ -169,7 +169,8 @@ Size=289,209
 Collapsed=0
 
 [Window][Enemy Spawn Tool]
-Pos=60,60
+ViewportPos=1391,659
+ViewportId=0xACBBED3A
 Size=382,256
 Collapsed=0
 

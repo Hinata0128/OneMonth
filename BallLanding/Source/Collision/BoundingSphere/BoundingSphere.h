@@ -15,6 +15,8 @@ public:
 		None,
 		Player,			//プレイヤー.
 		PlayerShot,		//プレイヤーの弾.
+		PlayerLobShot,	//プレイヤーの弾の放物線攻撃.
+		PlayerLobExplosion,	//プレイヤーの弾の爆発
 		Jabaran,		//敵.
 		JabaranShot,	//敵の弾.
 
@@ -59,6 +61,10 @@ public:
 		m_Position += pushVec;
 	}
 
+	void SetLifeTime(float duration) { m_LifeTime = duration; }
+	float GetLifeTime() const { return m_LifeTime; }
+	void DecreaseLifeTime(float dt) { if (m_LifeTime > 0.0f) m_LifeTime -= dt; }
+
 private:
 	StaticMesh*		m_pMesh;
 	D3DXVECTOR3		m_Position;	//中心座標.
@@ -67,4 +73,5 @@ private:
 	Tag m_Tag;
 	bool m_isProcessed;
 	bool m_isDead;
+	float m_LifeTime;
 };

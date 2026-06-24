@@ -3,6 +3,7 @@
 #include "System//02_Singleton//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "System/06_Camera/Camera.h"
 #include "System\02_Singleton\00_Manager\04_PlayerShotManager\PlayerShotManager.h"
+#include "..//..//ShotBase//PlayerLobShot//PlayerLobShot.h"
 #include "..//..//..//..//System/02_Singleton/00_Manager/03_CollisionManager/CollisionManager.h"
 
 
@@ -13,6 +14,8 @@ Player::Player()
 	, m_MoveSpeed	( 0.2f )	//移動速度.
 	, m_RotSpeed	( 0.05f )   //旋回速度.
 	, m_pCollider	( nullptr )
+
+	, m_pPlayerLobShot(nullptr)
 
 {
 	//敵のスタティックメッシュを呼び込む.
@@ -99,8 +102,41 @@ void Player::Update()
 		}
 	}
 #endif
+
+	if (GetAsyncKeyState('C') & 0x8000)
+	{
+		// 画面内にまだ放物弾がない、またはすでに死んでいる場合のみ新しく撃てる
+		if (m_pPlayerLobShot == nullptr || !m_pPlayerLobShot->IsActive())
+		{
+			// インスタンスがなければ生成
+			if (m_pPlayerLobShot == nullptr)
+			{
+				m_pPlayerLobShot = std::make_unique<PlayerLobShot>();
+			}
+
+			// パラメータをPlayer側で決定
+			D3DXVECTOR3 StartPos = m_Position;
+			float sinY = sinf(m_AngleY);
+			float cosY = cosf(m_AngleY);
+			D3DXVECTOR3 PlayerTargetDir = D3DXVECTOR3(sinY, 0.0f, cosY);
+
+			// 通常弾より少し遅め（40.0f）にして、2秒（Life）かけて山なりに飛ばす設定
+			D3DXVECTOR3 Velocity = PlayerTargetDir * 40.0f;
+			float Radius = 1.5f; // 放物攻撃なので少し判定を大きめに
+			float Life = 2.0f;   // 2秒で着弾
+
+			// 初期化して発射！
+			m_pPlayerLobShot->Launch(StartPos, Velocity, Radius, Life);
+		}
+	}
+
 	//弾が存在している時.
 	PlayerShotManager::GetInstance()->Update();
+
+	if (m_pPlayerLobShot && m_pPlayerLobShot->IsActive())
+	{
+		m_pPlayerLobShot->Update();
+	}
 
 	m_pCollider->SetPosition(m_Position);
 	
@@ -110,6 +146,10 @@ void Player::Update()
 void Player::Draw()
 {
 	PlayerShotManager::GetInstance()->Draw();
+	if (m_pPlayerLobShot && m_pPlayerLobShot->IsActive())
+	{
+		m_pPlayerLobShot->Draw();
+	}
 	Character::Draw();
 
 #ifdef _DEBUG

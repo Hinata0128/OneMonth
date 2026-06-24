@@ -27,11 +27,25 @@ void CollisionManager::Update()
             m_BossHitEffectCooldown = 0.0f;
     }
 
+    for (auto& sphere : m_pBSphere)
+    {
+        if (sphere && sphere->GetLifeTime() > 0.0f)
+        {
+            sphere->DecreaseLifeTime(Timer::GetInstance().DeltaTime());
+            if (sphere->GetLifeTime() <= 0.0f)
+            {
+                sphere->SetDead(true); // 寿命が尽きたら死亡フラグを立てる
+            }
+        }
+    }
+
+
     AllCollider();
     //死んだ子リジョンをまとめて削除.
     m_pBSphere.erase(
         std::remove_if(m_pBSphere.begin(), m_pBSphere.end(),
-            [](const std::shared_ptr<BoundingSphere>& s) {
+            [](const std::shared_ptr<BoundingSphere>& s) 
+            {
                 return s->IsDead(); //IsDeadがtrueのものをリストから外す.
             }),
         m_pBSphere.end()
@@ -162,6 +176,34 @@ void CollisionManager::AllCollider()
         }
     }
 
+
+    for (auto& Explosion : m_pBSphere)
+    {
+        // タグを PlayerLobExplosion から PlayerLobShot に変更しました！
+        if (!Explosion || Explosion->IsDead() || Explosion->GetTag() != BoundingSphere::Tag::PlayerLobShot)
+        {
+            continue;
+        }
+
+        // 爆発の範囲内にいる敵を探索
+        for (auto& JabaranList : m_pBSphere)
+        {
+            if (!JabaranList || JabaranList->IsDead() || JabaranList->GetTag() != BoundingSphere::Tag::Jabaran)
+            {
+                continue;
+            }
+
+            // 爆発（巨大コライダー） vs 敵球体の判定
+            if (CheckSphereSphere(*Explosion, *JabaranList))
+            {
+                // 敵を死亡状態にする
+                JabaranList->SetDead(true);
+
+                // ヒットエフェクトなどを敵の位置に出す
+                Effect::GetInstance()->Play(Effect::Laser01, JabaranList->GetPostion());
+            }
+        }
+    }
 }
 
 CollisionResult CollisionManager::CheckSphereBoxDetailed(const BoundingSphere& sphere, const BoundingBox& box)
