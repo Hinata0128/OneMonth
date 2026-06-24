@@ -1,9 +1,13 @@
 ﻿#pragma once
 #include "GameObject//02_StaticMeshObject//01_Character//Character.h"
+#include "..//..//..//..//Collision/BoundingSphere/BoundingSphere.h"
 
 class StaticMeshManager;
 class Camera;
 class PlayerShotManager;
+class PlayerLobShot;
+class CollisionManager;
+
 
 class Player
 	: public Character
@@ -30,8 +34,9 @@ public:
 	}	
 	//カメラにつける用の関数.
 	float GetAngleY() const { return m_AngleY; }
-	float m_AngleY;
-
+	
+	//プレイヤーの位置を敵に教えるための関数.
+	const D3DXVECTOR3 GetPlayerPos() const { return m_Position; }
 
 
 
@@ -39,5 +44,10 @@ private:
 	Camera* m_pCamera;
 	float   m_MoveSpeed;   //移動速度.
 	float   m_RotSpeed;    //旋回速度.
+	float	m_AngleY;
+
+	std::shared_ptr<BoundingSphere> m_pCollider;
+	//仮でここに書いておく.
+	std::unique_ptr<PlayerLobShot> m_pPlayerLobShot;
 
 };

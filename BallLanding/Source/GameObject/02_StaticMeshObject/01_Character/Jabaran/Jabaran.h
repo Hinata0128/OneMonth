@@ -4,8 +4,9 @@
 
 class StaticMeshManager;
 class CollisionManager;
+class JabaranShotManager;
 
-class Jabaran
+class Jabaran final
 	: public Character
 {
 public:
@@ -19,6 +20,9 @@ public:
 	void Init() override;
 	//死亡しているかのGet関数.
 	bool GetDead() const override;
+	//敵の死亡判定.
+	void SetDead(bool isDead) { m_Dead = isDead; }
 private:
 	std::shared_ptr<BoundingSphere> m_pCollider;
+	bool m_Dead;
 };

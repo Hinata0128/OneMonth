@@ -9,13 +9,17 @@
 class BoundingSphere
 {
 public:
-	//当たり判定を使っているクラス.
+	//当たり判定をしようするクラスの当たり判定名をここに登録する.
 	enum class Tag : byte
 	{
 		None,
-		Player,		//プレイヤー.
-		PlayerShot,	//プレイヤーの弾.
-		Enemy,		//敵.
+		Player,			//プレイヤー.
+		PlayerShot,		//プレイヤーの弾.
+		PlayerLobShot,	//プレイヤーの弾の放物線攻撃.
+		PlayerLobExplosion,	//プレイヤーの弾の爆発
+		Jabaran,		//敵.
+		JabaranShot,	//敵の弾.
+
 	};
 public:
 	BoundingSphere();
@@ -57,6 +61,10 @@ public:
 		m_Position += pushVec;
 	}
 
+	void SetLifeTime(float duration) { m_LifeTime = duration; }
+	float GetLifeTime() const { return m_LifeTime; }
+	void DecreaseLifeTime(float dt) { if (m_LifeTime > 0.0f) m_LifeTime -= dt; }
+
 private:
 	StaticMesh*		m_pMesh;
 	D3DXVECTOR3		m_Position;	//中心座標.
@@ -65,4 +73,5 @@ private:
 	Tag m_Tag;
 	bool m_isProcessed;
 	bool m_isDead;
+	float m_LifeTime;
 };
