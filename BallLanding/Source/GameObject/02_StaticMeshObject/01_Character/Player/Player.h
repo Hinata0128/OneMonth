@@ -5,6 +5,7 @@
 class StaticMeshManager;
 class Camera;
 class PlayerShotManager;
+class PlayerLobShot;
 class CollisionManager;
 
 
@@ -46,5 +47,7 @@ private:
 	float	m_AngleY;
 
 	std::shared_ptr<BoundingSphere> m_pCollider;
+	//仮でここに書いておく.
+	std::unique_ptr<PlayerLobShot> m_pPlayerLobShot;
 
 };
