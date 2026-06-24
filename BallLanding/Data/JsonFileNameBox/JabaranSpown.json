@@ -1,0 +1,16 @@
+{
+    "Enemies": [
+        {
+            "PosX": 3.549999952316284,
+            "PosY": 0.0,
+            "PosZ": 10.0,
+            "Type": "Jabaran"
+        },
+        {
+            "PosX": 0.0,
+            "PosY": 0.0,
+            "PosZ": 10.0,
+            "Type": "Jabaran"
+        }
+    ]
+}

@@ -196,6 +196,8 @@
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\01_Character\Character.cpp" />
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\01_Character\Jabaran\Jabaran.cpp" />
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\01_Character\Player\Player.cpp" />
+    <ClCompile Include="Source\GameObject\02_StaticMeshObject\ShotBase\JabaranShot\JabaranShot.cpp" />
+    <ClCompile Include="Source\GameObject\02_StaticMeshObject\ShotBase\PlayerLobShot\PlayerLobShot.cpp" />
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\ShotBase\PlayerShot\PlayerShot.cpp" />
     <ClCompile Include="Source\GameObject\02_StaticMeshObject\ShotBase\ShotBase.cpp" />
     <ClCompile Include="Source\GameObject\03_UIObject\00_LimitTime\LimitTime.cpp" />
@@ -229,6 +231,8 @@
     <ClCompile Include="Source\System\02_Singleton\00_Manager\03_CollisionManager\CollisionManager.cpp" />
     <ClCompile Include="Source\System\02_Singleton\00_Manager\04_PlayerShotManager\PlayerShotManager.cpp" />
     <ClCompile Include="Source\System\01_Renderer\Renderer.cpp" />
+    <ClCompile Include="Source\System\02_Singleton\00_Manager\05_JabaranShotManager\JabaranShotManager.cpp" />
+    <ClCompile Include="Source\System\02_Singleton\00_Manager\06_JabaranManager\JabaranManager.cpp" />
     <ClCompile Include="Source\System\02_Singleton\01_Timer\Timer.cpp" />
     <ClCompile Include="Source\System\02_Singleton\02_Score\Score.cpp" />
     <ClCompile Include="Source\System\02_Singleton\02_Score\ScoreManager.cpp" />
@@ -262,6 +266,8 @@
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\01_Character\Character.h" />
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\01_Character\Jabaran\Jabaran.h" />
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\01_Character\Player\Player.h" />
+    <ClInclude Include="Source\GameObject\02_StaticMeshObject\ShotBase\JabaranShot\JabaranShot.h" />
+    <ClInclude Include="Source\GameObject\02_StaticMeshObject\ShotBase\PlayerLobShot\PlayerLobShot.h" />
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\ShotBase\PlayerShot\PlayerShot.h" />
     <ClInclude Include="Source\GameObject\02_StaticMeshObject\ShotBase\ShotBase.h" />
     <ClInclude Include="Source\GameObject\03_UIObject\00_LimitTime\LimitTime.h" />
@@ -293,6 +299,8 @@
     <ClInclude Include="Source\System\02_Singleton\00_Manager\02_ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="Source\System\02_Singleton\00_Manager\03_CollisionManager\CollisionManager.h" />
     <ClInclude Include="Source\System\02_Singleton\00_Manager\04_PlayerShotManager\PlayerShotManager.h" />
+    <ClInclude Include="Source\System\02_Singleton\00_Manager\05_JabaranShotManager\JabaranShotManager.h" />
+    <ClInclude Include="Source\System\02_Singleton\00_Manager\06_JabaranManager\JabaranManager.h" />
     <ClInclude Include="Source\System\02_Singleton\00_Manager\ManagerBase.h" />
     <ClInclude Include="Source\System\01_Renderer\Renderer.h" />
     <ClInclude Include="Source\System\02_Singleton\01_Timer\Timer.h" />

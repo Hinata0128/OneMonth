@@ -1,4 +1,4 @@
-#include "ShotBase.h"
+﻿#include "ShotBase.h"
 #include "System//02_Singleton//01_Timer//Timer.h"
 
 namespace number

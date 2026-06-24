@@ -1,4 +1,4 @@
-#include "PlayerShotManager.h"
+﻿#include "PlayerShotManager.h"
 #include "GameObject\02_StaticMeshObject\ShotBase\PlayerShot\PlayerShot.h"
 
 //コンストラクタ.
@@ -70,20 +70,21 @@ void PlayerShotManager::Launch(const D3DXVECTOR3& Pos, const D3DXVECTOR3& Vel, f
 	//ここでPlayerShotクラスをインスタンス生成する.
 	auto PlayerShotList = std::make_unique<PlayerShot>();
 
-	//PlayerShotクラスで作成したLaunchクラスを呼ぶ.
+	//PlayerShotクラスで作成したLaunch関数を呼ぶ.
 	PlayerShotList->Launch(Pos, Vel, Radius, Life);
 
 	//弾を複製する.
 	m_upPlayerShotList.push_back(std::move(PlayerShotList));
 }
 
+//敵に当たった時に弾の当たり判定を消す関数.
 void PlayerShotManager::KillShotByCollider(const std::shared_ptr<BoundingSphere>& sphere)
 {
-	for (auto& shot : m_upPlayerShotList)
+	for (auto& PlayerShotList : m_upPlayerShotList)
 	{
-		if (shot && shot->GetCollider() == sphere)
+		if (PlayerShotList && PlayerShotList->GetCollider() == sphere)
 		{
-			shot->ShotKill(); //弾を死亡状態にする.
+			PlayerShotList->ShotKill(); //弾を死亡状態にする.
 			break;
 		}
 	}

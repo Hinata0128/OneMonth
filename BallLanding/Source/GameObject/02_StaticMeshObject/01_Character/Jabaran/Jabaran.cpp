@@ -2,9 +2,17 @@
 
 #include "System//02_Singleton//00_Manager//01_StaticMeshManager//StaticMeshManager.h"
 #include "..//..//..//..//System/02_Singleton/00_Manager/03_CollisionManager/CollisionManager.h"
+#include "..//..//..//..//System/02_Singleton/00_Manager/05_JabaranShotManager/JabaranShotManager.h"
+
+namespace ColliderPosNumber
+{
+	float ColliderSettingPos = 1.5f;
+}
 
 Jabaran::Jabaran()
-	: Character	()
+	: Character			()
+	, m_pCollider		( nullptr )
+	, m_Dead			( false )
 {
 	//敵のスタティックメッシュを呼び込む.
 	auto pStaticMesh = StaticMeshManager::GetInstance()->GetMeshInstance(StaticMeshManager::CMeshList::Jabaran);
@@ -24,11 +32,12 @@ Jabaran::Jabaran()
 	Init();
 
 	m_pCollider = std::make_shared<BoundingSphere>();
-	m_pCollider->SetTag(BoundingSphere::Tag::Enemy);
+	m_pCollider->SetTag(BoundingSphere::Tag::Jabaran);
 	m_pCollider->CreateSphereForMesh(*pStaticMesh);
 
-	float adjustedRadius = m_pCollider->GetRadius() * Scale.x;
+	float adjustedRadius = m_pCollider->GetRadius() * 0.005f;
 	m_pCollider->SetRadius(adjustedRadius);
+
 
 	CollisionManager::GetInstance()->AddSphere(m_pCollider);
 }
@@ -46,19 +55,39 @@ void Jabaran::Update()
 		return;
 	}
 
-	Character::Update();
 
 	if (m_pCollider != nullptr)
 	{
 		//敵の座標を常にコライダーに同期.
-		m_pCollider->SetPosition(m_Position);
+		D3DXVECTOR3 ColliderPos = m_Position;
+		ColliderPos.y += ColliderPosNumber::ColliderSettingPos;
+		m_pCollider->SetPosition(ColliderPos);
 
 		if (m_pCollider->IsDead())
 		{
-			// TODO: 敵の死亡フラグを立てる（例：m_isDead = true; など）
-			// ここで敵自身を消滅、または死亡アニメーションに移行させてください
+			m_Dead = true;
 		}
 	}
+
+	if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
+	{
+		//初期パラメータの設定.
+		//敵の位置取得.
+		D3DXVECTOR3 StartPos = m_Position;
+		//弾の速度の計算.
+		D3DXVECTOR3 JabaranTargetDir = { 0.0f, 0.0f, 0.0f };
+		D3DXVECTOR3 Velocity = JabaranTargetDir * 50.0f;
+		//弾の大きさ.
+		float Radius = 1.0f;
+		//弾の寿命.
+		float Life = 3.0f;
+		//生成直後弾の設定可能.
+		JabaranShotManager::GetInstance()->Launch(StartPos, Velocity, Radius, Life);
+	}
+
+	JabaranShotManager::GetInstance()->Update();
+
+	Character::Update();
 }
 
 void Jabaran::Draw()
@@ -70,11 +99,14 @@ void Jabaran::Draw()
 	}
 
 	Character::Draw();
+
+	JabaranShotManager::GetInstance()->Draw();
+
 #ifdef _DEBUG
-	/*if (m_pCollider)
+	if (m_pCollider)
 	{
 		m_pCollider->Draw();
-	}*/
+	}
 #endif
 }
 
@@ -84,5 +116,5 @@ void Jabaran::Init()
 
 bool Jabaran::GetDead() const
 {
-	return false;
+	return m_Dead;
 }
